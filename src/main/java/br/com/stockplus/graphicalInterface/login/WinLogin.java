@@ -21,6 +21,38 @@ public class WinLogin extends JFrame {
 
     public JButton btnLogin;
 
+    private void realizarLogin() {
+
+        String username =textLogin.getText();
+        String password = String.valueOf(textSenha.getPassword());
+        UsuarioDAO DAO = new UsuarioDAO();
+
+
+        var usuario =  DAO.findByLogin(username, password);
+
+        if(usuario != null){
+            SessionControl.login(usuario);
+            irParaHome();
+
+        }
+        else{
+            JOptionPane.showMessageDialog(null,  "Usuario ou senha invalida");
+        }
+
+
+    }
+    private void irParaHome() {
+        Timer timer = new Timer(50, e -> {
+            setVisible(false);
+            WinPrincipal principal = new WinPrincipal();
+            principal.setLocationRelativeTo(null);
+            principal.setVisible(true);
+            dispose();
+        });
+        timer.setRepeats(false);
+        timer.start();
+    }
+
     public WinLogin() {
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -78,36 +110,7 @@ public class WinLogin extends JFrame {
         panel.add(btnLogin);
     }
 
-    private void realizarLogin() {
-
-        String username =textLogin.getText();
-        String password = String.valueOf(textSenha.getPassword());
-        UsuarioDAO DAO = new UsuarioDAO();
 
 
-       var usuario =  DAO.findByLogin(username, password);
 
-       if(usuario != null){
-           SessionControl.login(usuario);
-           irParaHome();
-
-       }
-       else{
-           JOptionPane.showMessageDialog(null,  "Usuario ou senha invalida");
-       }
-
-
-    }
-
-    private void irParaHome() {
-        Timer timer = new Timer(50, e -> {
-            setVisible(false);
-            WinPrincipal principal = new WinPrincipal();
-            principal.setLocationRelativeTo(null);
-            principal.setVisible(true);
-            dispose();
-        });
-        timer.setRepeats(false);
-        timer.start();
-    }
 }

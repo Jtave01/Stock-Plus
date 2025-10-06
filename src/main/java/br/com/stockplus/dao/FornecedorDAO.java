@@ -3,6 +3,9 @@ package br.com.stockplus.dao;
 import br.com.stockplus.connection.ConnectionUtil;
 import br.com.stockplus.entity.FornecedorEntity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /// -->
 public class FornecedorDAO {
 
@@ -48,6 +51,27 @@ public class FornecedorDAO {
 
         return idReturn;
     }
+    public String findByCnpjFromId(Long id){
+        String cnpj = "";
+        var sql = "SELECT cnpj FROM fornecedor WHERE id = ? ";
+        try( var connection = ConnectionUtil.getConnection();
+             var statemente = connection.prepareStatement(sql);
+        ) {
+            statemente.setLong(1, id);
+            statemente.executeQuery();
+            var resultSet = statemente.getResultSet();
+
+            if(resultSet.next()){
+                cnpj = resultSet.getString("cnpj");
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return cnpj;
+    }
+
 
     public FornecedorEntity findByCnpj(String cnpj){
         FornecedorEntity entity = new FornecedorEntity();
@@ -71,12 +95,45 @@ public class FornecedorDAO {
                 entity.setCidade(resultSet.getString("cidade"));
                 entity.setUf(resultSet.getString("uf"));
                 entity.setEmail(resultSet.getString("email"));
-
             }
         }catch (Exception e){
             e.printStackTrace();
         }
         return entity;
+    }
+
+    public List<FornecedorEntity> findAll(){
+        List<FornecedorEntity>  entities = new ArrayList<>();
+
+        var sql = "SELECT * FROM fornecedor";
+
+        try( var connection = ConnectionUtil.getConnection();
+            var statemente = connection.prepareStatement(sql)
+        ){
+            statemente.executeQuery();
+            var resultSet = statemente.getResultSet();
+
+            while (resultSet.next()){
+                FornecedorEntity entity = new FornecedorEntity();
+
+                entity.setId(resultSet.getLong("id"));
+                entity.setCnpj(resultSet.getString("cnpj"));
+                entity.setRazaoSocial(resultSet.getString("razao_social"));
+                entity.setEndereco(resultSet.getString("endereco"));
+                entity.setNumeroEndereco(resultSet.getString("numero"));
+                entity.setTelefone(resultSet.getString("telefone"));
+                entity.setNumeroEndereco(resultSet.getString("bairro"));
+                entity.setCidade(resultSet.getString("cidade"));
+                entity.setUf(resultSet.getString("uf"));
+                entity.setEmail(resultSet.getString("email"));
+                entities.add(entity);
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return entities;
     }
 
 

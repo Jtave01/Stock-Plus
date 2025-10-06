@@ -32,7 +32,7 @@ public class SessionControl {
         return usuarioLogado != null && usuarioLogado.getRole().getId() == 1;
     }
 
-
+    /// ---> Teste conect
     public static void testeConnection(){
         try(var connection = ConnectionUtil.getConnection()) {
             System.out.println("Conection status ---> \n" +

@@ -7,6 +7,9 @@ import br.com.stockplus.entity.ProdutoEntity;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 public class ProdutoDAO {
     public static ProdutoEntity entity = new ProdutoEntity();
 
@@ -55,33 +58,67 @@ public class ProdutoDAO {
         }
     }
 
-    private ProdutoEntity readOneProduc(String code){
+    public ProdutoEntity findByCode(String code){
         ProdutoEntity entity = new ProdutoEntity();
-
+        var sql = "SELECT * FROM produto WHERE cod_ident=? ";
         try(var connection = ConnectionUtil.getConnection();
-            var statemente = connection.prepareStatement("null");
+            var statemente = connection.prepareStatement(sql);
         ) {
+            statemente.setString(1, code);
+            statemente.executeQuery();
+            var resultSet = statemente.getResultSet();
+
+            if(resultSet.next()){
+                entity.setId(resultSet.getLong("id"));
+                entity.setNome(resultSet.getString("nome"));
+                entity.setDescricao(resultSet.getString("descricao"));
+                entity.setQuantidade(resultSet.getInt("quantidade"));
+                entity.setPreco(resultSet.getDouble("preco"));
+                entity.setLocalizacao(resultSet.getString("localizacao"));
+
+                FornecedorEntity fornecedor = new FornecedorEntity();
+                fornecedor.setId(resultSet.getLong("fornecedor_id"));
+                entity.setFornecedor(fornecedor);
+                entity.setDataInsercao(resultSet.getDate("data_insercao"));
+
+            }
 
         }catch (Exception e){
             e.printStackTrace();
         }
-
         return entity;
     }
 
-    private ProdutoEntity readAlL(){
-        ProdutoEntity entity = new ProdutoEntity();
-
+    public List<ProdutoEntity> findAll(){
+       List<ProdutoEntity> entities = new ArrayList<>();
+       var sql = "SELECT * FROM produto ";
         try(var connection = ConnectionUtil.getConnection();
-            var statemente = connection.prepareStatement("null");
+            var statemente = connection.prepareStatement(sql);
         ) {
+            statemente.executeQuery();
+            var resultSet = statemente.getResultSet();
 
+            while (resultSet.next()){
+                ProdutoEntity entity = new ProdutoEntity();
+                entity.setId(resultSet.getLong("id"));
+                entity.setCodIdent(resultSet.getString("cod_ident"));
+                entity.setNome(resultSet.getString("nome"));
+                entity.setDescricao(resultSet.getString("descricao"));
+                entity.setQuantidade(resultSet.getInt("quantidade"));
+                entity.setPreco(resultSet.getDouble("preco"));
+                entity.setLocalizacao(resultSet.getString("localizacao"));
 
+                FornecedorEntity fornecedor = new FornecedorEntity();
+                fornecedor.setId(resultSet.getLong("fornecedor_id"));
 
+                entity.setFornecedor(fornecedor);
+                entity.setDataInsercao(resultSet.getDate("data_insercao"));
+                entities.add(entity);
+            }
         }catch (Exception e){
             e.printStackTrace();
         }
 
-        return  entity;
+        return  entities;
     }
 }

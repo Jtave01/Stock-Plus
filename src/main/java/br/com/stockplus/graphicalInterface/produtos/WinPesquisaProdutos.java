@@ -1,9 +1,16 @@
 package br.com.stockplus.graphicalInterface.produtos;
 
+import br.com.stockplus.dao.FornecedorDAO;
+import br.com.stockplus.dao.ProdutoDAO;
+import br.com.stockplus.entity.FornecedorEntity;
+import br.com.stockplus.entity.ProdutoEntity;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class WinPesquisaProdutos extends JFrame {
 
@@ -20,6 +27,8 @@ public class WinPesquisaProdutos extends JFrame {
     public JTextField textQuantidade;
     public JTextField textPreco;
     public JTextField textLocalizacao;
+    public JTextField textFornecedor;
+    public JTextField textDataInsercao;
 
     // Botões
     public JButton btnBuscar;
@@ -29,6 +38,52 @@ public class WinPesquisaProdutos extends JFrame {
     public JTable tableProdutos;
     public DefaultTableModel tableModel;
     public JScrollPane scrollPane;
+
+    public void pesquisaProduto()  {
+
+        ProdutoDAO DAO = new ProdutoDAO();
+        FornecedorDAO DAOf = new FornecedorDAO();
+        String code = textCodigo.getText().trim();
+
+        try {
+            var produto = new ProdutoEntity();
+            produto = DAO.findByCode(code);
+
+            if(produto == null){
+
+                JOptionPane.showMessageDialog(this, "Produto não encontrado.");
+                limpar();
+                return;
+            }
+
+            textId.setText(String.valueOf(produto.getId()));
+            textNome.setText(produto.getNome());
+            textDescricao.setText(produto.getDescricao());
+            textQuantidade.setText(String.valueOf(produto.getQuantidade()));
+            textPreco.setText(String.valueOf(produto.getPreco()));
+            textLocalizacao.setText(produto.getLocalizacao());
+            String fornecedor = DAOf.findByCnpjFromId(produto.getFornecedor().getId());
+            textFornecedor.setText(fornecedor);
+            textDataInsercao.setText(String.valueOf(produto.getDataInsercao()));
+
+        }catch (Exception e){
+            limpar();
+            JOptionPane.showMessageDialog(this, "\"Produto não encontrado.\"");
+
+        }
+    }
+
+    public void limpar(){
+         textCodigo.setText("");
+         textId.setText("");
+         textNome.setText("");
+         textDescricao.setText("");
+         textQuantidade.setText("");
+         textPreco.setText("");
+         textLocalizacao.setText("");
+         textFornecedor.setText("");
+         textDataInsercao.setText("");
+    }
 
     public WinPesquisaProdutos() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -67,7 +122,7 @@ public class WinPesquisaProdutos extends JFrame {
         btnBuscar.setForeground(Color.WHITE);
         btnBuscar.setBounds(355, 66, 100, 25);
         panel.add(btnBuscar);
-
+        btnBuscar.addActionListener(e -> pesquisaProduto());
         // Separador
         JSeparator separator = new JSeparator();
         separator.setBounds(20, 105, 507, 2);
@@ -151,6 +206,30 @@ public class WinPesquisaProdutos extends JFrame {
         textLocalizacao.setBackground(Color.WHITE);
         panel.add(textLocalizacao);
 
+        // Fornecedor (NOVO)
+        JLabel lblFornecedor = new JLabel("Fornecedor:");
+        lblFornecedor.setBounds(60, 305, 85, 16);
+        panel.add(lblFornecedor);
+
+        textFornecedor = new JTextField();
+        textFornecedor.setColumns(10);
+        textFornecedor.setBounds(145, 302, 310, 22);
+        textFornecedor.setEditable(false);
+        textFornecedor.setBackground(Color.WHITE);
+        panel.add(textFornecedor);
+
+// Data de Inserção (NOVO)
+        JLabel lblDataInsercao = new JLabel("Data Inserção:");
+        lblDataInsercao.setBounds(50, 337, 95, 16);
+        panel.add(lblDataInsercao);
+
+        textDataInsercao = new JTextField();
+        textDataInsercao.setColumns(10);
+        textDataInsercao.setBounds(145, 334, 150, 22);
+        textDataInsercao.setEditable(false);
+        textDataInsercao.setBackground(Color.WHITE);
+        panel.add(textDataInsercao);
+
         btnLimpar = new JButton("LIMPAR");
         btnLimpar.setForeground(new Color(248, 248, 255));
         btnLimpar.setBackground(new Color(255, 140, 0));
@@ -212,12 +291,45 @@ public class WinPesquisaProdutos extends JFrame {
 
         tableProdutos.getTableHeader().setResizingAllowed(false);
         tableProdutos.getTableHeader().setReorderingAllowed(false);
+        tableProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
 
+        });
         scrollPane = new JScrollPane(tableProdutos);
         tableProdutos.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setBounds(20, 50, 560, 380);
         panelTabela.add(scrollPane);
+        carregarTodosProdutos();
+    }
+
+    public void carregarTodosProdutos(){
+        try {
+            ProdutoDAO DAO = new ProdutoDAO();
+
+            List<ProdutoEntity> produtos = DAO.findAll();
+            FornecedorDAO DAOF= new FornecedorDAO();
+
+            for (ProdutoEntity produto: produtos){
+                String fornecedor =  DAOF.findByCnpjFromId(produto.getFornecedor().getId());
+                Object[] linha = {
+                        produto.getCodIdent(),
+                        produto.getNome(),
+                        produto.getDescricao(),
+                        produto.getQuantidade(),
+                        produto.getPreco(),
+                        produto.getLocalizacao(),
+                        fornecedor
+                };
+                tableModel.addRow(linha);
+            }
+
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(this,
+                    "Erro ao carregar fornecedores: " + e.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
     }
 }

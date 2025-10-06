@@ -90,8 +90,9 @@ public class UsuarioDAO {
 
 
             while (resultSet.next()){
-                var role = new RoleEntitty();
-                role.setId(resultSet.getLong("role_id"));
+              var role = new RoleEntitty();
+              role.setId(resultSet.getLong("role_id"));
+
               entitty.setId(resultSet.getLong("id"));
               entitty.setUsaername(resultSet.getString("username"));
               entitty.setNome(resultSet.getString("nome"));

@@ -6,10 +6,11 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class WinPesquisaFornecedor extends JFrame {
 
-    private static final long serialVersionUID = 1L;
 
     public JPanel contentPane;
     public JPanel panel;
@@ -243,31 +244,52 @@ public class WinPesquisaFornecedor extends JFrame {
         tableFornecedores.getTableHeader().setReorderingAllowed(false);
 
         tableFornecedores.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent e) {
-                int row = tableFornecedores.getSelectedRow();
-                if (row >= 0) {
-                    String cnpj = (String) tableModel.getValueAt(row, 0);
-                   // carregarFornecedorPorCnpj(cnpj);
-                }
-            }
+
         });
+
         scrollPane = new JScrollPane(tableFornecedores);
-        tableFornecedores.setAutoResizeMode(JTable.AUTO_RESIZE_OFF); // ADICIONE ESTA LINHA
+        tableFornecedores.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setBounds(20, 50, 560, 380);
         panelTabela.add(scrollPane);
+        carregarTodosFornecedores();
 
-       // carregarTodosFornecedores();
-
-        // Carregar todos os fornecedores automaticamente
-       // carregarTodosFornecedores();
     }
 
+    private void carregarTodosFornecedores() {
+        try {
+
+            tableModel.setRowCount(0);
+
+            FornecedorDAO DAO = new FornecedorDAO();
+            List<FornecedorEntity> fornecedores = DAO.findAll();
+
+            // prenchando a tabela
+            for (FornecedorEntity fornecedor : fornecedores) {
+                Object[] linha = {
+                        fornecedor.getCnpj(),
+                        fornecedor.getRazaoSocial(),
+                        fornecedor.getEmail(),
+                        fornecedor.getEndereco(),
+                        fornecedor.getNumeroEndereco(),
+                        fornecedor.getTelefone(),
+                        fornecedor.getBairroEndereco(),
+                        fornecedor.getCidade(),
+                        fornecedor.getUf()
+                };
+                tableModel.addRow(linha);
+            }
 
 
-
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Erro ao carregar fornecedores: " + e.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }
 
 
 }
