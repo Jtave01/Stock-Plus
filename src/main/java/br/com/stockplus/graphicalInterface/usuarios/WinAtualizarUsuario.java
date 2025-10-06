@@ -1,7 +1,10 @@
 package br.com.stockplus.graphicalInterface.usuarios;
 
 import br.com.stockplus.dao.UsuarioDAO;
+import br.com.stockplus.entity.RoleEntitty;
 import br.com.stockplus.entity.UsuarioEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -133,7 +136,7 @@ public class WinAtualizarUsuario extends JFrame {
         panel.add(permicoes);
 
         // Aviso
-        JLabel lblAviso = new JLabel("* Deixe a senha em branco para não alterar");
+        JLabel lblAviso = new JLabel("* ATENÇÂO nao deixe a senha em branco");
         lblAviso.setForeground(Color.WHITE);
         lblAviso.setFont(new Font("Tahoma", Font.ITALIC, 11));
         lblAviso.setBounds(145, 290, 300, 16);
@@ -178,7 +181,32 @@ public class WinAtualizarUsuario extends JFrame {
     }
 
     private void atualizarUsuario() {
+        String senha = new String(textSenha.getPassword());
+        String repeteSenha = new String(textRepitaSenha.getPassword());
 
+        UsuarioEntity entity = new UsuarioEntity();
+        entity.setUsaername(textUsuario.getText());
+        entity.setNome(textNome.getText());
+        entity.setEmail(textEmail.getText());
+
+        if(senha.isEmpty() || repeteSenha.isEmpty()){
+            JOptionPane.showMessageDialog(null, "Por favor, preencha ambos os campos de senha");
+        }
+        if (!repeteSenha.equals(senha)){
+            JOptionPane.showMessageDialog(null, "As senhas nao conferem");
+            return;
+        }
+        entity.setPassword(String.valueOf(textSenha.getPassword()));
+        Long idPermissao = (long) (permicoes.getSelectedIndex() + 1);
+        RoleEntitty role = new RoleEntitty();
+        role.setId(idPermissao);
+        entity.setRole(role);
+        entity.setId(Long.valueOf(textId.getText()));
+
+        UsuarioDAO DAO = new UsuarioDAO();
+
+        DAO.update(entity);
+        limparCampos();
     }
 
 

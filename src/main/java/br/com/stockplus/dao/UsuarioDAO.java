@@ -22,7 +22,6 @@ public class UsuarioDAO {
             statemente.setString(3, usuarioEntity.getEmail());
             statemente.setString(4, senhaCripto);
             statemente.setLong(5, usuarioEntity.getRole().getId());
-
             statemente.executeUpdate();
 
         }catch (Exception e){
@@ -33,11 +32,21 @@ public class UsuarioDAO {
 
 
     public void update(UsuarioEntity usuarioEntity){
-        var sql = "UPDATE ";
+        var sql = "UPDATE usuarios SET username = ?, nome = ?, email = ?, password = ?, role_id = ? WHERE id = ?";
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        RoleEntitty role = new RoleEntitty();
+
         try(var connection = ConnectionUtil.getConnection();
             var statemente = connection.prepareStatement(sql);
         ){
-
+          statemente.setString(1, usuarioEntity.getUsaername());
+          statemente.setString(2, usuarioEntity.getNome());
+          statemente.setString(3, usuarioEntity.getEmail());
+          String senhaCripto = encoder.encode(usuarioEntity.getPassword());
+          statemente.setString(4,senhaCripto);
+          statemente.setLong(5, usuarioEntity.getRole().getId());
+          statemente.setLong(6,usuarioEntity.getId());
+          statemente.executeUpdate();
 
         }catch (Exception e){
             e.printStackTrace();
@@ -89,15 +98,15 @@ public class UsuarioDAO {
             var resultSet = statemente.getResultSet();
 
 
-            while (resultSet.next()){
+            if (resultSet.next()){
               var role = new RoleEntitty();
-              role.setId(resultSet.getLong("role_id"));
 
               entitty.setId(resultSet.getLong("id"));
               entitty.setUsaername(resultSet.getString("username"));
               entitty.setNome(resultSet.getString("nome"));
               entitty.setEmail(resultSet.getString("email"));
               entitty.setPassword(resultSet.getString("password"));
+              role.setId(resultSet.getLong("role_id"));
               entitty.setRole(role);
             }
 
