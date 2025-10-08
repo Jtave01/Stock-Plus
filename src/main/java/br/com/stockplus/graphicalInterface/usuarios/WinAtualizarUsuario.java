@@ -3,7 +3,6 @@ package br.com.stockplus.graphicalInterface.usuarios;
 import br.com.stockplus.dao.UsuarioDAO;
 import br.com.stockplus.entity.RoleEntitty;
 import br.com.stockplus.entity.UsuarioEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -28,7 +27,7 @@ public class WinAtualizarUsuario extends JFrame {
     // Botões
     public JButton btnBuscar;
     public JButton btnAtualizar;
-    public JButton btnCancelar;
+    public JButton btnDeletar;
 
 
     public WinAtualizarUsuario() {
@@ -143,12 +142,11 @@ public class WinAtualizarUsuario extends JFrame {
         panel.add(lblAviso);
 
         // Botões
-        btnCancelar = new JButton("CANCELAR");
-        btnCancelar.setForeground(new Color(248, 248, 255));
-        btnCancelar.setBackground(new Color(220, 20, 60));
-        btnCancelar.setBounds(254, 390, 135, 32);
-        contentPane.add(btnCancelar);
-        btnCancelar.addActionListener(e -> dispose());
+        btnDeletar = new JButton("DELETAR");
+        btnDeletar.setForeground(new Color(248, 248, 255));
+        btnDeletar.setBackground(new Color(220, 20, 60));
+        btnDeletar.setBounds(254, 390, 135, 32);
+        contentPane.add(btnDeletar);
 
         btnAtualizar = new JButton("ATUALIZAR");
         btnAtualizar.setForeground(new Color(248, 248, 255));

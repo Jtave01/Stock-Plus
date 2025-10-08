@@ -123,7 +123,7 @@ public class UsuarioDAO {
 
         try(var connection = ConnectionUtil.getConnection();
             var statemente = connection.prepareStatement(sql);
-          ) {
+        ) {
             statemente.setString(1, user);
             statemente.executeQuery();
             var resultSet = statemente.getResultSet();

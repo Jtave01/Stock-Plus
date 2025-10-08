@@ -3,6 +3,7 @@ package br.com.stockplus.dao;
 import br.com.stockplus.connection.ConnectionUtil;
 import br.com.stockplus.entity.FornecedorEntity;
 import br.com.stockplus.entity.ProdutoEntity;
+import br.com.stockplus.entity.RoleEntitty;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -37,15 +38,26 @@ public class ProdutoDAO {
 
     }
 
-    private void update(String code){
+    public void update(ProdutoEntity entity){
+        var sql = "UPDATE produto SET cod_ident = ?, nome = ?, descricao = ?, quantidade = ?, preco = ?, localizacao = ?, fornecedor_id =? WHERE id = ?";
         try(var connetion = ConnectionUtil.getConnection();
-            var statemente = connetion.prepareStatement("null");
+            var statemente = connetion.prepareStatement(sql);
         ) {
+            statemente.setString(1, entity.getCodIdent());
+            statemente.setString(2, entity.getNome());
+            statemente.setString(3, entity.getDescricao());
+            statemente.setInt(4, entity.getQuantidade());
+            statemente.setDouble(5, entity.getPreco());
+            statemente.setString(6, entity.getLocalizacao());
+            statemente.setLong(7, entity.getFornecedor().getId());
+            statemente.setLong(8, entity.getId());
 
+            statemente.executeUpdate();
 
         }catch (Exception e){
             e.printStackTrace();
         }
+
     }
 
     private void delete(String code){
@@ -118,7 +130,37 @@ public class ProdutoDAO {
         }catch (Exception e){
             e.printStackTrace();
         }
-
         return  entities;
+    }
+
+    public ProdutoEntity findById(Long id){
+        ProdutoEntity entity = new ProdutoEntity();
+        var sql = "SELECT * FROM produto WHERE id = ?";
+
+        try( var connection = ConnectionUtil.getConnection();
+             var statemente = connection.prepareStatement(sql)
+        ) {
+            statemente.setLong(1, id);
+            statemente.executeQuery();
+            var resultSet = statemente.getResultSet();
+            if (resultSet.next()){
+                FornecedorEntity fornecedor = new FornecedorEntity();
+                entity.setId(resultSet.getLong("id"));
+                entity.setCodIdent(resultSet.getString("cod_ident"));
+                entity.setNome(resultSet.getString("nome"));
+                entity.setDescricao(resultSet.getString("descricao"));
+                entity.setQuantidade(resultSet.getInt("quantidade"));
+                entity.setPreco(resultSet.getDouble("preco"));
+                entity.setLocalizacao(resultSet.getString("localizacao"));
+                fornecedor.setId(resultSet.getLong("fornecedor_id"));
+                entity.setFornecedor(fornecedor);
+
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+         return entity;
     }
 }

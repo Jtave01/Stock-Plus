@@ -49,13 +49,6 @@ public class WinPesquisaProdutos extends JFrame {
             var produto = new ProdutoEntity();
             produto = DAO.findByCode(code);
 
-            if(produto == null){
-
-                JOptionPane.showMessageDialog(this, "Produto não encontrado.");
-                limpar();
-                return;
-            }
-
             textId.setText(String.valueOf(produto.getId()));
             textNome.setText(produto.getNome());
             textDescricao.setText(produto.getDescricao());

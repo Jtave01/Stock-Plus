@@ -1,7 +1,9 @@
 package br.com.stockplus.graphicalInterface.home;
 
 import br.com.stockplus.graphicalInterface.controllClasse.SessionControl;
+import br.com.stockplus.graphicalInterface.fornecedor.WinAtualizarFornecedor;
 import br.com.stockplus.graphicalInterface.login.WinLogin;
+import br.com.stockplus.graphicalInterface.produtos.WinAtualizarProduto;
 import br.com.stockplus.graphicalInterface.produtos.WinCadastroProdutos;
 import br.com.stockplus.graphicalInterface.fornecedor.WinCadastrodeFornecedor;
 import br.com.stockplus.graphicalInterface.usuarios.WinCadastrodeUsuario;
@@ -67,6 +69,63 @@ public class WinPrincipal extends JFrame {
         }
     }
 
+    private void abriAtualizarFornecedor(){
+        try {
+            JMenuBar menuBarHome = this.getJMenuBar();
+            String titulo = this.getTitle();
+            WinAtualizarFornecedor tempFrame = new WinAtualizarFornecedor();
+            JPanel painelHome = (JPanel) tempFrame.getContentPane();
+            this.getContentPane().removeAll();
+            this.setLayout(painelHome.getLayout());
+
+            while (painelHome.getComponentCount()> 0){
+                Component comp = painelHome.getComponent(0);
+                painelHome.remove(comp);
+                this.getContentPane().add(comp);
+            }
+
+            this.getContentPane().setBackground(painelHome.getBackground());
+            this.setJMenuBar(menuBarHome);
+            this.setTitle("Atualizar fornecedor");
+            this.revalidate();
+            this.repaint();
+            tempFrame.dispose();
+        }catch (Exception e){
+
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this,
+                    "Erro: " + e.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }
+
+    private void abrirAtualizarProduto(){
+        try {
+            JMenuBar menuHome = this.getJMenuBar();
+            String titulo = this.getTitle();
+
+            WinAtualizarProduto tempFrame = new WinAtualizarProduto();
+            JPanel painelHome  =(JPanel) tempFrame.getContentPane();
+            this.getContentPane().removeAll();
+            this.setLayout(painelHome.getLayout());
+
+            while (painelHome.getComponentCount() > 0 ){
+                Component comp = painelHome.getComponent(0);
+                painelHome.remove(comp);
+                this.getContentPane().add(comp);
+            }
+            this.getContentPane().setBackground(painelHome.getBackground());
+            this.setTitle("Atualizar produtos");
+            this.revalidate();
+            this.repaint();
+            tempFrame.dispose();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void abrirPesquisarUsuario(){
         try {
             JMenuBar menuBarHome = this.getJMenuBar();
@@ -90,7 +149,7 @@ public class WinPrincipal extends JFrame {
             this.setTitle("Atualizar usuario");
             this.revalidate();
             this.repaint();
-
+            tempFrame.dispose();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -193,6 +252,7 @@ public class WinPrincipal extends JFrame {
             this.revalidate();
             this.repaint();
             tempFrame.dispose();
+
         }catch (Exception e){
             JOptionPane.showMessageDialog(this, "Erro: " + e.getMessage(), "Erro: ", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
@@ -222,6 +282,7 @@ public class WinPrincipal extends JFrame {
             this.revalidate();
             this.repaint();
             tempFrame.dispose();
+
         }catch (Exception e){
             JOptionPane.showMessageDialog(this, "Erro: " + e.getMessage(), "Erro: ", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
@@ -320,12 +381,17 @@ public class WinPrincipal extends JFrame {
 		menuFornecedores.setFont(new Font("Segoe UI", Font.BOLD, 16));
 		menuBar.add(menuFornecedores);
         JMenuItem subMenuFCadastrar = new JMenuItem("Cadastrar fornecedor");
-        JMenuItem subMenuFPEsquisar = new JMenuItem("Pesquisar fornecedor");
+        JMenuItem subMenuFPesquisar = new JMenuItem("Pesquisar fornecedor");
+        JMenuItem subMenuFAtualizar = new JMenuItem("Atualizar fornecedor");
         menuFornecedores.add(subMenuFCadastrar);
         menuFornecedores.addSeparator();
-        menuFornecedores.add(subMenuFPEsquisar);
+        menuFornecedores.add(subMenuFPesquisar);
+        menuFornecedores.addSeparator();
+        menuFornecedores.add(subMenuFAtualizar);
         subMenuFCadastrar.addActionListener(e -> abrirCadastroFornecedor());
-        subMenuFPEsquisar.addActionListener(e -> abrirPesquisaFornecedor());
+        subMenuFPesquisar.addActionListener(e -> abrirPesquisaFornecedor());
+        subMenuFAtualizar.addActionListener(e -> abriAtualizarFornecedor());
+
 
         /// ----> usuaarios
 		JMenu menuUsuarios = new JMenu("USUÁRIOS");
@@ -333,7 +399,7 @@ public class WinPrincipal extends JFrame {
 		menuUsuarios.setForeground(Color.WHITE);
 		menuUsuarios.setFont(new Font("Segoe UI", Font.BOLD, 16));
         menuUsuarios.addActionListener(e -> {
-            if(SessionControl.isAdmin() == false){
+            if(!SessionControl.isAdmin()){
                 JOptionPane.showMessageDialog(null, "Permição negada");
             }
         });
@@ -380,12 +446,18 @@ public class WinPrincipal extends JFrame {
         menuBar.add(menuProdutos);
         JMenuItem subMenuPCadastar = new JMenuItem("Cadastrar Produto");
         JMenuItem subMenuPPesquisar = new JMenuItem("Pesquisar Produto");
+        JMenuItem subMenuPAtualizar = new JMenuItem("Atualizar Produto");
         menuProdutos.add(subMenuPCadastar);
         menuProdutos.addSeparator();
         menuProdutos.add(subMenuPPesquisar);
+        menuProdutos.addSeparator();
+        menuProdutos.add(subMenuPAtualizar);
         subMenuPCadastar.addActionListener(e -> abrirCadastroProduto());
         subMenuPPesquisar.addActionListener(e -> abrirPesquisaProdutos());
+        subMenuPAtualizar.addActionListener( e -> abrirAtualizarProduto());
 
+
+        ///  ----> colocando menu sar ao canto direto
         menuBar.add(Box.createHorizontalGlue());
 
 

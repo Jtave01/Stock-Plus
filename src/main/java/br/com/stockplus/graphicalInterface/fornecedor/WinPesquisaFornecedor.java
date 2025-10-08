@@ -14,7 +14,6 @@ public class WinPesquisaFornecedor extends JFrame {
 
     public JPanel contentPane;
     public JPanel panel;
-
     // Campos de texto
     public JTextField textCnpj;
     public JTextField textId;
@@ -23,32 +22,40 @@ public class WinPesquisaFornecedor extends JFrame {
     public JTextField textTelefone;
     public JTextField textCidade;
     public JTextField textUf;
-
     // Botões
     public JButton btnBuscar;
     public JButton btnLimpar;
-
     // Tabela
     public JTable tableFornecedores;
     public DefaultTableModel tableModel;
     public JScrollPane scrollPane;
 
+
+
     private void buscarFornecedor() {
         FornecedorEntity fornecedor = new FornecedorEntity();
         FornecedorDAO DAO = new FornecedorDAO();
-        String cnpj = textCnpj.getText();
 
-        fornecedor = DAO.findByCnpj(cnpj);
-        textId.setText(fornecedor.getId().toString());
-        textRazaoSocial.setText(fornecedor.getRazaoSocial());
-        textEmail.setText(fornecedor.getEmail());
-        textTelefone.setText(fornecedor.getTelefone());
-        textCidade.setText(fornecedor.getCidade());
-        textUf.setText(fornecedor.getUf());
+        try {
+
+            String cnpj = textCnpj.getText();
+            fornecedor = DAO.findByCnpj(cnpj);
+
+            textId.setText(fornecedor.getId().toString());
+            textRazaoSocial.setText(fornecedor.getRazaoSocial());
+            textEmail.setText(fornecedor.getEmail());
+            textTelefone.setText(fornecedor.getTelefone());
+            textCidade.setText(fornecedor.getCidade());
+            textUf.setText(fornecedor.getUf());
 
 
+        }catch (Exception e){
+            limparCampos();
+            JOptionPane.showMessageDialog(this, "\"Fornecedor não encontrado.\"");
 
+        }
     }
+
     private void limparCampos() {
         textCnpj.setText("");
         textId.setText("");
@@ -265,7 +272,7 @@ public class WinPesquisaFornecedor extends JFrame {
             FornecedorDAO DAO = new FornecedorDAO();
             List<FornecedorEntity> fornecedores = DAO.findAll();
 
-            // prenchando a tabela
+            // prenche
             for (FornecedorEntity fornecedor : fornecedores) {
                 Object[] linha = {
                         fornecedor.getCnpj(),
@@ -280,8 +287,6 @@ public class WinPesquisaFornecedor extends JFrame {
                 };
                 tableModel.addRow(linha);
             }
-
-
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this,
                     "Erro ao carregar fornecedores: " + e.getMessage(),
