@@ -1,5 +1,6 @@
 package br.com.stockplus.graphicalInterface.produtos;
 
+import br.com.stockplus.connection.ConnectionUtil;
 import br.com.stockplus.dao.FornecedorDAO;
 import br.com.stockplus.dao.ProdutoDAO;
 import br.com.stockplus.entity.FornecedorEntity;
@@ -34,13 +35,11 @@ public class WinAtualizarProduto extends JFrame {
     private void buscarProduto(){
 
         ProdutoDAO DAO = new ProdutoDAO();
-
         ProdutoEntity produto = new ProdutoEntity();
-
-        Long id = Long.valueOf(textId.getText());
 
         try {
 
+            Long id = Long.valueOf(textId.getText());
             produto = DAO.findById(id);
 
             textCodigo.setText(produto.getCodIdent());
@@ -60,7 +59,7 @@ public class WinAtualizarProduto extends JFrame {
             liberarCampos();
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Codigo invalido ou produto nao localizado");
+            JOptionPane.showMessageDialog(this, "\"Produto não encontrado.\"");
         }
 
     }
@@ -104,6 +103,21 @@ public class WinAtualizarProduto extends JFrame {
             JOptionPane.showMessageDialog(this, "Erro ao atulizar o produto");
         }
 
+    }
+
+    public void deletarProdutos(){
+        Long id = Long.valueOf(textId.getText());
+        try{
+            ProdutoDAO DAO = new ProdutoDAO();
+
+
+            DAO.delete(id);
+
+
+            JOptionPane.showMessageDialog(this, "Produto deletado com suecesso");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void liberarCampos(){
@@ -246,7 +260,7 @@ public class WinAtualizarProduto extends JFrame {
         btnDeletar.setBackground(new Color(220, 20, 60));
         btnDeletar.setBounds(254, 455, 135, 32);
         contentPane.add(btnDeletar);
-
+        btnDeletar.addActionListener(e -> deletarProdutos());
 
         btnAtualizar = new JButton("ATUALIZAR");
         btnAtualizar.setForeground(new Color(248, 248, 255));

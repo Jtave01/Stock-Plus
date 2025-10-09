@@ -27,21 +27,26 @@ public class WinPesquisaUsuario extends JFrame {
     private void buscarUsuario() {
         var DAO = new UsuarioDAO();
         String username = textUsuario.getText();
-        UsuarioEntity usuario = DAO.findByUserName(username);
-        String role = usuario.getRole().getId() == 1L ? "Administrador" : "Usuário";
 
-        textId.setText(String.valueOf(Long.parseLong(String.valueOf(usuario.getId()))));
-        textUsuario.setText(usuario.getUsaername());
-        textNome.setText(usuario.getNome());
-        textEmail.setText(usuario.getEmail());
-        textPermissao.setText(role);
+        try {
+            UsuarioEntity usuario = DAO.findByUserName(username);
+            String role = usuario.getRole().getId() == 1L ? "Administrador" : "Usuário";
 
+            textId.setText(String.valueOf(Long.parseLong(String.valueOf(usuario.getId()))));
+            textUsuario.setText(usuario.getUsaername());
+            textNome.setText(usuario.getNome());
+            textEmail.setText(usuario.getEmail());
+            textPermissao.setText(role);
 
-        boolean habilitar = true;
-        textUsuario.setEnabled(habilitar);
-        textNome.setEnabled(habilitar);
-        textEmail.setEnabled(habilitar);
-        textPermissao.setEnabled(habilitar);
+            boolean habilitar = true;
+            textUsuario.setEnabled(habilitar);
+            textNome.setEnabled(habilitar);
+            textEmail.setEnabled(habilitar);
+            textPermissao.setEnabled(habilitar);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Usuario não encontrado");
+        }
 
 
     }

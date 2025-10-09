@@ -44,7 +44,7 @@ public class WinCadastrodeFornecedor extends JFrame {
     public JButton btnCadastrar;
     public JButton btnCancelar;
 
-    private void cadastroAux(){
+    private void cadastroDeFornecedor(){
 
         FornecedorEntity entity = new FornecedorEntity();
 
@@ -95,17 +95,6 @@ public class WinCadastrodeFornecedor extends JFrame {
         lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 27));
         lblTitulo.setBounds(60, 10, 404, 44);
         panel.add(lblTitulo);
-
-        // ID
-        lblId = new JLabel("ID:");
-        lblId.setBounds(79, 60, 56, 16);
-        panel.add(lblId);
-
-        textId = new JTextField();
-        textId.setColumns(10);
-        textId.setBounds(108, 57, 87, 22);
-        textId.setEditable(false);
-        panel.add(textId);
 
         // CNPJ
         lblCnpj = new JLabel("CNPJ:");
@@ -209,7 +198,7 @@ public class WinCadastrodeFornecedor extends JFrame {
         btnCadastrar.setBackground(new Color(102, 204, 102));
         btnCadastrar.setBounds(431, 420, 135, 32);
         btnCadastrar.addActionListener(e ->{
-                    cadastroAux();
+                    cadastroDeFornecedor();
                     limparCampos();
         } );
         contentPane.add(btnCadastrar);

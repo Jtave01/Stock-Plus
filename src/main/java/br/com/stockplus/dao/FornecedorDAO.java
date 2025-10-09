@@ -28,6 +28,21 @@ public class FornecedorDAO {
         }catch (Exception e){
             e.printStackTrace();       }
     }
+
+    public void delete(Long id){
+        var sql = "DELETE FROM fornecedor WHERE id = ?";
+
+        try(var connection = ConnectionUtil.getConnection();
+            var statemente = connection.prepareStatement(sql);
+        ) {
+         statemente.setLong(1, id);
+         statemente.executeUpdate();
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     public Long findByIdCnpj(String cnpj){
         Long idReturn = 0L;
         var sql = "SELECT id from fornecedor WHERE cnpj = ? ";

@@ -29,7 +29,72 @@ public class WinAtualizarUsuario extends JFrame {
     public JButton btnAtualizar;
     public JButton btnDeletar;
 
+    private void atualizarUsuario() {
 
+        try {
+
+            String senha = new String(textSenha.getPassword());
+            String repeteSenha = new String(textRepitaSenha.getPassword());
+
+            UsuarioEntity entity = new UsuarioEntity();
+            entity.setUsaername(textUsuario.getText());
+            entity.setNome(textNome.getText());
+            entity.setEmail(textEmail.getText());
+
+            if(senha.isEmpty() || repeteSenha.isEmpty()){
+                JOptionPane.showMessageDialog(null, "Por favor, preencha ambos os campos de senha");
+                return;
+            }
+            if (!repeteSenha.equals(senha)){
+                JOptionPane.showMessageDialog(null, "As senhas nao conferem");
+                return;
+            }
+            entity.setPassword(String.valueOf(textSenha.getPassword()));
+            Long idPermissao = (long) (permicoes.getSelectedIndex() + 1);
+            RoleEntitty role = new RoleEntitty();
+            role.setId(idPermissao);
+            entity.setRole(role);
+            entity.setId(Long.valueOf(textId.getText()));
+
+            UsuarioDAO DAO = new UsuarioDAO();
+
+            DAO.update(entity);
+            limparCampos();
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    public void deletarUsuario(){
+        Long id = Long.valueOf(textId.getText());
+
+        try {
+
+            UsuarioDAO DAO = new UsuarioDAO();
+            DAO.delete(id);
+            JOptionPane.showMessageDialog(this, "Usuario deletado com sucesso");
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+
+    }
+
+
+    private void limparCampos() {
+        textId.setText("");
+        textUsuario.setText("");
+        textNome.setText("");
+        textEmail.setText("");
+        textSenha.setText("");
+        textRepitaSenha.setText("");
+        permicoes.setSelectedIndex(0);
+    }
     public WinAtualizarUsuario() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 884, 470);
@@ -147,6 +212,7 @@ public class WinAtualizarUsuario extends JFrame {
         btnDeletar.setBackground(new Color(220, 20, 60));
         btnDeletar.setBounds(254, 390, 135, 32);
         contentPane.add(btnDeletar);
+        btnDeletar.addActionListener(e -> deletarUsuario());
 
         btnAtualizar = new JButton("ATUALIZAR");
         btnAtualizar.setForeground(new Color(248, 248, 255));
@@ -158,63 +224,33 @@ public class WinAtualizarUsuario extends JFrame {
     }
 
     private void buscarUsuario() {
-        UsuarioDAO DAO = new UsuarioDAO();
-
-
-        Long idConvert = Long.parseLong(textId.getText());
-        UsuarioEntity usuario = DAO.findById(idConvert);
-        textUsuario.setText(usuario.getUsaername());
-        textNome.setText(usuario.getNome());
-        textEmail.setText(usuario.getEmail());
-
-
-        boolean habilitar = true;
-        textUsuario.setEnabled(habilitar);
-        textNome.setEnabled(habilitar);
-        textEmail.setEnabled(habilitar);
-        textSenha.setEnabled(habilitar);
-        textRepitaSenha.setEnabled(habilitar);
-        permicoes.setEnabled(habilitar);
-        btnAtualizar.setEnabled(habilitar);
-    }
-
-    private void atualizarUsuario() {
-        String senha = new String(textSenha.getPassword());
-        String repeteSenha = new String(textRepitaSenha.getPassword());
-
-        UsuarioEntity entity = new UsuarioEntity();
-        entity.setUsaername(textUsuario.getText());
-        entity.setNome(textNome.getText());
-        entity.setEmail(textEmail.getText());
-
-        if(senha.isEmpty() || repeteSenha.isEmpty()){
-            JOptionPane.showMessageDialog(null, "Por favor, preencha ambos os campos de senha");
-        }
-        if (!repeteSenha.equals(senha)){
-            JOptionPane.showMessageDialog(null, "As senhas nao conferem");
-            return;
-        }
-        entity.setPassword(String.valueOf(textSenha.getPassword()));
-        Long idPermissao = (long) (permicoes.getSelectedIndex() + 1);
-        RoleEntitty role = new RoleEntitty();
-        role.setId(idPermissao);
-        entity.setRole(role);
-        entity.setId(Long.valueOf(textId.getText()));
 
         UsuarioDAO DAO = new UsuarioDAO();
 
-        DAO.update(entity);
-        limparCampos();
+        try {
+            Long idConvert = Long.parseLong(textId.getText());
+            UsuarioEntity usuario = new UsuarioEntity();
+
+            usuario   = DAO.findById(idConvert);
+            textUsuario.setText(usuario.getUsaername());
+            textNome.setText(usuario.getNome());
+            textEmail.setText(usuario.getEmail());
+
+
+            boolean habilitar = true;
+            textUsuario.setEnabled(habilitar);
+            textNome.setEnabled(habilitar);
+            textEmail.setEnabled(habilitar);
+            textSenha.setEnabled(habilitar);
+            textRepitaSenha.setEnabled(habilitar);
+            permicoes.setEnabled(habilitar);
+            btnAtualizar.setEnabled(habilitar);
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Usuario não encontrado");
+        }
+
     }
 
 
-    private void limparCampos() {
-        textId.setText("");
-        textUsuario.setText("");
-        textNome.setText("");
-        textEmail.setText("");
-        textSenha.setText("");
-        textRepitaSenha.setText("");
-        permicoes.setSelectedIndex(0);
-    }
 }

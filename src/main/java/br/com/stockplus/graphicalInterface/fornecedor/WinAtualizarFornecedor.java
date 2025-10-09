@@ -69,11 +69,16 @@ public class WinAtualizarFornecedor extends JFrame {
 
     public void buscarFornecedor(){
         FornecedorDAO DAO = new FornecedorDAO();
-        Long idConvert = Long.parseLong(textId.getText());
-
-        FornecedorEntity fornecedor =  DAO.findById(idConvert);
+        FornecedorEntity fornecedor = new FornecedorEntity();
 
         try {
+
+            Long idConvert = Long.parseLong(textId.getText());
+
+
+            fornecedor =  DAO.findById(idConvert);
+
+
             textCnpj.setText(fornecedor.getCnpj());
             textRazaoSocial.setText(fornecedor.getRazaoSocial());
             textEmail.setText(fornecedor.getEmail());
@@ -90,6 +95,23 @@ public class WinAtualizarFornecedor extends JFrame {
             JOptionPane.showMessageDialog(this, "\"Fornecedor não encontrado.\"");
         }
 
+    }
+
+    public void deetarFornecedor(){
+        Long id = Long.valueOf(textId.getText());
+
+        try {
+            FornecedorDAO DAO = new FornecedorDAO();
+
+
+            DAO.delete(id);
+
+            limpar();
+            JOptionPane.showMessageDialog(this, "Fornecedor deletado com sucesso");
+
+        }catch (Exception e ){
+            e.printStackTrace();
+        }
     }
 
     public void habilitar(){
@@ -274,6 +296,7 @@ public class WinAtualizarFornecedor extends JFrame {
         btnDeletar.setBackground(new Color(220, 20, 60));
         btnDeletar.setBounds(254, 455, 135, 32);
         contentPane.add(btnDeletar);
+        btnDeletar.addActionListener(e -> deetarFornecedor());
 
 
         btnAtualizar = new JButton("ATUALIZAR");

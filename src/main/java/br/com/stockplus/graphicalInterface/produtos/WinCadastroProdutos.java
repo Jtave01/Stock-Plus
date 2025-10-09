@@ -102,16 +102,6 @@ public class WinCadastroProdutos extends JFrame {
         lblTitulo.setBounds(73, 10, 404, 44);
         panel.add(lblTitulo);
 
-        // ID
-        lblId = new JLabel("ID:");
-        lblId.setBounds(92, 62, 56, 16);
-        panel.add(lblId);
-
-        textId = new JTextField();
-        textId.setColumns(10);
-        textId.setBounds(121, 59, 87, 22);
-        textId.setEditable(false);
-        panel.add(textId);
 
         // Código de Barra
         lblCodigoBarra = new JLabel("Código de Barra:");

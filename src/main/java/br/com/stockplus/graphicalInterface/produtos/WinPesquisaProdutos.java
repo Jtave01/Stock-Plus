@@ -47,6 +47,7 @@ public class WinPesquisaProdutos extends JFrame {
 
         try {
             var produto = new ProdutoEntity();
+
             produto = DAO.findByCode(code);
 
             textId.setText(String.valueOf(produto.getId()));

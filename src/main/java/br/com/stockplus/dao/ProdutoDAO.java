@@ -60,10 +60,13 @@ public class ProdutoDAO {
 
     }
 
-    private void delete(String code){
+    public void delete(Long id){
+        var sql = "DELETE FROM produto WHERE id = ?";
         try(var connection = ConnectionUtil.getConnection();
-            var statemente = connection.prepareStatement("null");
+            var statemente = connection.prepareStatement(sql);
         ) {
+            statemente.setLong(1, id);
+            statemente.executeUpdate();
 
         }catch (Exception e){
             e.printStackTrace();

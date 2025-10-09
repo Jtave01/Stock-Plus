@@ -30,6 +30,21 @@ public class UsuarioDAO {
         }
     }
 
+    public void delete(Long id){
+        var sql ="DELETE FROM usuarios WHERE id = ?";
+
+        try( var connection = ConnectionUtil.getConnection();
+             var statemante = connection.prepareStatement(sql)
+        ) {
+
+            statemante.setLong(1, id);
+            statemante.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public void update(UsuarioEntity usuarioEntity){
         var sql = "UPDATE usuarios SET username = ?, nome = ?, email = ?, password = ?, role_id = ? WHERE id = ?";

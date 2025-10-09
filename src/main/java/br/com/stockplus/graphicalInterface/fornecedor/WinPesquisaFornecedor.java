@@ -65,6 +65,39 @@ public class WinPesquisaFornecedor extends JFrame {
         textCidade.setText("");
         textUf.setText("");
     }
+
+    private void carregarTodosFornecedores() {
+        try {
+
+            tableModel.setRowCount(0);
+
+            FornecedorDAO DAO = new FornecedorDAO();
+            List<FornecedorEntity> fornecedores = DAO.findAll();
+
+            // prenche
+            for (FornecedorEntity fornecedor : fornecedores) {
+                Object[] linha = {
+                        fornecedor.getCnpj(),
+                        fornecedor.getRazaoSocial(),
+                        fornecedor.getEmail(),
+                        fornecedor.getEndereco(),
+                        fornecedor.getNumeroEndereco(),
+                        fornecedor.getTelefone(),
+                        fornecedor.getBairroEndereco(),
+                        fornecedor.getCidade(),
+                        fornecedor.getUf()
+                };
+                tableModel.addRow(linha);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Erro ao carregar fornecedores: " + e.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }
+
     public WinPesquisaFornecedor() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 1250, 550);
@@ -263,38 +296,4 @@ public class WinPesquisaFornecedor extends JFrame {
         carregarTodosFornecedores();
 
     }
-
-    private void carregarTodosFornecedores() {
-        try {
-
-            tableModel.setRowCount(0);
-
-            FornecedorDAO DAO = new FornecedorDAO();
-            List<FornecedorEntity> fornecedores = DAO.findAll();
-
-            // prenche
-            for (FornecedorEntity fornecedor : fornecedores) {
-                Object[] linha = {
-                        fornecedor.getCnpj(),
-                        fornecedor.getRazaoSocial(),
-                        fornecedor.getEmail(),
-                        fornecedor.getEndereco(),
-                        fornecedor.getNumeroEndereco(),
-                        fornecedor.getTelefone(),
-                        fornecedor.getBairroEndereco(),
-                        fornecedor.getCidade(),
-                        fornecedor.getUf()
-                };
-                tableModel.addRow(linha);
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this,
-                    "Erro ao carregar fornecedores: " + e.getMessage(),
-                    "Erro",
-                    JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
-        }
-    }
-
-
 }
