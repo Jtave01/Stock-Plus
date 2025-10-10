@@ -28,6 +28,11 @@ public class SessionControl {
         usuarioLogado = user;
     }
 
+    public static UsuarioEntity getUser(){
+
+        return usuarioLogado ;
+    }
+
     public static boolean isAdmin(){
         return usuarioLogado != null && usuarioLogado.getRole().getId() == 1;
     }

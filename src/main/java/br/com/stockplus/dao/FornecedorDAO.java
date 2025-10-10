@@ -136,7 +136,7 @@ public class FornecedorDAO {
                 entity.setEndereco(resultSet.getString("endereco"));
                 entity.setNumeroEndereco(resultSet.getString("numero"));
                 entity.setTelefone(resultSet.getString("telefone"));
-                entity.setNumeroEndereco(resultSet.getString("bairro"));
+                entity.setBairroEndereco(resultSet.getString("bairro"));
                 entity.setCidade(resultSet.getString("cidade"));
                 entity.setUf(resultSet.getString("uf"));
                 entity.setEmail(resultSet.getString("email"));

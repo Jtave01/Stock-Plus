@@ -14,6 +14,7 @@ import java.util.List;
 public class ProdutoDAO {
     public static ProdutoEntity entity = new ProdutoEntity();
 
+    /// Criar metodo a partir da query - >>>> SELECT produto.id, SUM(quantidade) * SUM(preco) FROM produto WHERE id = 6;
 
     public void insert(ProdutoEntity entity){
         var sql = "INSERT INTO produto (cod_ident, nome, descricao, quantidade, preco, localizacao, fornecedor_id,data_insercao) values(?,?,?,?,?,?,?,?) ";

@@ -3,10 +3,13 @@ package br.com.stockplus.graphicalInterface.usuarios;
 import br.com.stockplus.dao.UsuarioDAO;
 import br.com.stockplus.entity.RoleEntitty;
 import br.com.stockplus.entity.UsuarioEntity;
+import br.com.stockplus.graphicalInterface.controllClasse.SessionControl;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+
+import static br.com.stockplus.graphicalInterface.controllClasse.SessionControl.login;
 
 public class WinAtualizarUsuario extends JFrame {
 
@@ -212,7 +215,18 @@ public class WinAtualizarUsuario extends JFrame {
         btnDeletar.setBackground(new Color(220, 20, 60));
         btnDeletar.setBounds(254, 390, 135, 32);
         contentPane.add(btnDeletar);
-        btnDeletar.addActionListener(e -> deletarUsuario());
+        btnDeletar.addActionListener(e -> {
+            UsuarioDAO DAO = new UsuarioDAO();
+            DAO.findById(SessionControl.getUser().getId());
+
+            if (SessionControl.getUser().getId().equals(Long.valueOf(textId.getText()))){
+                JOptionPane.showMessageDialog(this, "Não e possivel deletar o propio usuario ");
+                return;
+            }
+
+            deletarUsuario();
+        });
+
 
         btnAtualizar = new JButton("ATUALIZAR");
         btnAtualizar.setForeground(new Color(248, 248, 255));
