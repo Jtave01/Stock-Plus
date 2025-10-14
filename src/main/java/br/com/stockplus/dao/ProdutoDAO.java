@@ -96,6 +96,7 @@ public class ProdutoDAO {
                 fornecedor.setId(resultSet.getLong("fornecedor_id"));
                 entity.setFornecedor(fornecedor);
                 entity.setDataInsercao(resultSet.getDate("data_insercao"));
+                entity.setTotalPreco(resultSet.getDouble("total_preco"));
 
             }
 
@@ -129,6 +130,7 @@ public class ProdutoDAO {
 
                 entity.setFornecedor(fornecedor);
                 entity.setDataInsercao(resultSet.getDate("data_insercao"));
+                entity.setTotalPreco(resultSet.getDouble("total_preco"));
                 entities.add(entity);
             }
         }catch (Exception e){

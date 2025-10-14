@@ -16,4 +16,5 @@ public class ProdutoEntity {
     private String localizacao;
     private FornecedorEntity fornecedor;
     private Date dataInsercao;
+    private Double totalPreco;
 }

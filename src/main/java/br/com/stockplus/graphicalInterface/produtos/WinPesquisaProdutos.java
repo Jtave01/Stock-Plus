@@ -29,6 +29,7 @@ public class WinPesquisaProdutos extends JFrame {
     public JTextField textLocalizacao;
     public JTextField textFornecedor;
     public JTextField textDataInsercao;
+    public JTextField textPrecoTotal;
 
     // Botões
     public JButton btnBuscar;
@@ -59,6 +60,7 @@ public class WinPesquisaProdutos extends JFrame {
             String fornecedor = DAOf.findByCnpjFromId(produto.getFornecedor().getId());
             textFornecedor.setText(fornecedor);
             textDataInsercao.setText(String.valueOf(produto.getDataInsercao()));
+            textPrecoTotal.setText(String.valueOf(produto.getTotalPreco()));
 
         }catch (Exception e){
             limpar();
@@ -188,6 +190,9 @@ public class WinPesquisaProdutos extends JFrame {
         textPreco.setBackground(Color.WHITE);
         panel.add(textPreco);
 
+
+
+
         // Localização
         JLabel lblLocalizacao = new JLabel("Localização:");
         lblLocalizacao.setBounds(60, 273, 85, 16);
@@ -200,7 +205,7 @@ public class WinPesquisaProdutos extends JFrame {
         textLocalizacao.setBackground(Color.WHITE);
         panel.add(textLocalizacao);
 
-        // Fornecedor (NOVO)
+        // Fornecedor
         JLabel lblFornecedor = new JLabel("Fornecedor:");
         lblFornecedor.setBounds(60, 305, 85, 16);
         panel.add(lblFornecedor);
@@ -212,7 +217,7 @@ public class WinPesquisaProdutos extends JFrame {
         textFornecedor.setBackground(Color.WHITE);
         panel.add(textFornecedor);
 
-// Data de Inserção (NOVO)
+        // Data de Inserção (NOVO)
         JLabel lblDataInsercao = new JLabel("Data Inserção:");
         lblDataInsercao.setBounds(50, 337, 95, 16);
         panel.add(lblDataInsercao);
@@ -223,6 +228,19 @@ public class WinPesquisaProdutos extends JFrame {
         textDataInsercao.setEditable(false);
         textDataInsercao.setBackground(Color.WHITE);
         panel.add(textDataInsercao);
+
+        //Preco total
+        JLabel lblPrecoTotal = new JLabel("Preço Total:");
+        lblPrecoTotal.setBounds(60, 369, 85, 16);
+        panel.add(lblPrecoTotal);
+
+        textPrecoTotal = new JTextField();
+        textPrecoTotal.setColumns(10);
+        textPrecoTotal.setBounds(145, 366, 150, 22);
+        textPrecoTotal.setEditable(false);
+        textPrecoTotal.setBackground(Color.WHITE);
+        panel.add(textPrecoTotal);
+
 
         btnLimpar = new JButton("LIMPAR");
         btnLimpar.setForeground(new Color(248, 248, 255));
@@ -243,7 +261,7 @@ public class WinPesquisaProdutos extends JFrame {
         lblTodosProdutos.setBounds(180, 10, 300, 30);
         panelTabela.add(lblTodosProdutos);
 
-        String[] colunas = {"Código", "Nome", "Descrição", "Quantidade", "Preço", "Localização", "Fornecedor"};
+        String[] colunas = {"Código", "Nome", "Descrição", "Quantidade", "Preço", "Localização", "Fornecedor", "Preço total"};
         tableModel = new DefaultTableModel(colunas, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -283,6 +301,11 @@ public class WinPesquisaProdutos extends JFrame {
         tableProdutos.getColumnModel().getColumn(6).setMaxWidth(150);
         tableProdutos.getColumnModel().getColumn(6).setMinWidth(150);
 
+
+        tableProdutos.getColumnModel().getColumn(7).setPreferredWidth(150);
+        tableProdutos.getColumnModel().getColumn(7).setMaxWidth(150);
+        tableProdutos.getColumnModel().getColumn(7).setMinWidth(150);
+
         tableProdutos.getTableHeader().setResizingAllowed(false);
         tableProdutos.getTableHeader().setReorderingAllowed(false);
         tableProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -311,9 +334,10 @@ public class WinPesquisaProdutos extends JFrame {
                         produto.getNome(),
                         produto.getDescricao(),
                         produto.getQuantidade(),
-                        produto.getPreco(),
+                        "R$ " + produto.getPreco(),
                         produto.getLocalizacao(),
-                        fornecedor
+                        fornecedor,
+                        "R$ " + produto.getTotalPreco()
                 };
                 tableModel.addRow(linha);
             }

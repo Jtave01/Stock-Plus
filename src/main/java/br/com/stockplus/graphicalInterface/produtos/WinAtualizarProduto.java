@@ -215,7 +215,7 @@ public class WinAtualizarProduto extends JFrame {
         panel.add(textQuantidade);
 
         // Preço
-        JLabel lblPreco = new JLabel("Preço:");
+        JLabel lblPreco = new JLabel("Preço unitário:");
         lblPreco.setBounds(280, 198, 50, 16);
         panel.add(lblPreco);
 
@@ -248,7 +248,7 @@ public class WinAtualizarProduto extends JFrame {
         panel.add(textFornecedor);
 
         // Aviso
-        JLabel lblAviso = new JLabel("* Busque o produto pelo ID para editar");
+        JLabel lblAviso = new JLabel("* Busque o produto pelo ID para atualizar ou deletar");
         lblAviso.setForeground(Color.WHITE);
         lblAviso.setFont(new Font("Tahoma", Font.ITALIC, 11));
         lblAviso.setBounds(145, 320, 300, 16);

@@ -175,18 +175,19 @@ public class WinCadastroProdutos extends JFrame {
         textCnpjFornecedor.setBounds(121, 285, 200, 22);
         panel.add(textCnpjFornecedor);
 
-
+        /*
         // Botões
         btnCancelar = new JButton("CANCELAR");
         btnCancelar.setForeground(new Color(248, 248, 255));
         btnCancelar.setBackground(new Color(220, 20, 60));
         btnCancelar.setBounds(267, 381, 135, 32);
         contentPane.add(btnCancelar);
+         */
 
         btnCadastrar = new JButton("CADASTRAR +");
         btnCadastrar.setForeground(new Color(248, 248, 255));
         btnCadastrar.setBackground(new Color(102, 204, 102));
-        btnCadastrar.setBounds(431, 381, 135, 32);
+        btnCadastrar.setBounds(340, 365, 135, 32);
         contentPane.add(btnCadastrar);
         btnCadastrar.addActionListener(e -> cadastroProdutos());
     }
