@@ -3,13 +3,11 @@ package br.com.stockplus.graphicalInterface.usuarios;
 import br.com.stockplus.dao.UsuarioDAO;
 import br.com.stockplus.entity.RoleEntitty;
 import br.com.stockplus.entity.UsuarioEntity;
-import br.com.stockplus.graphicalInterface.controllClasse.SessionControl;
+import br.com.stockplus.controllClasse.SessionControl;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-
-import static br.com.stockplus.graphicalInterface.controllClasse.SessionControl.login;
 
 public class WinAtualizarUsuario extends JFrame {
 

@@ -1,4 +1,4 @@
-package br.com.stockplus.graphicalInterface.controllClasse;
+package br.com.stockplus.controllClasse;
 
 import br.com.stockplus.connection.ConnectionUtil;
 import br.com.stockplus.entity.UsuarioEntity;

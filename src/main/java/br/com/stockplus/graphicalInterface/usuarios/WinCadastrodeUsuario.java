@@ -156,17 +156,18 @@ public class WinCadastrodeUsuario extends JFrame {
         permicoes.setBounds(145, 259, 193, 22);
         panel.add(permicoes);
 
-        // Botões fora do panel
-        JButton btnCancelar = new JButton("CANCELAR");
+        /*
+        btnCancelar = new JButton("CANCELAR");
         btnCancelar.setForeground(new Color(248, 248, 255));
         btnCancelar.setBackground(new Color(220, 20, 60));
         btnCancelar.setBounds(254, 355, 135, 32);
         contentPane.add(btnCancelar);
+         */
 
-        JButton btnCadastrar = new JButton("CADASTRAR +");
+        btnCadastrar = new JButton("CADASTRAR +");
         btnCadastrar.setForeground(new Color(248, 248, 255));
         btnCadastrar.setBackground(new Color(102, 204, 102));
-        btnCadastrar.setBounds(428, 355, 135, 32);
+        btnCadastrar.setBounds(340, 347, 135, 32);
         contentPane.add(btnCadastrar);
         btnCadastrar.addActionListener(e-> cadastroAux());
 

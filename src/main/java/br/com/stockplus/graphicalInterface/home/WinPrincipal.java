@@ -1,6 +1,6 @@
 package br.com.stockplus.graphicalInterface.home;
 
-import br.com.stockplus.graphicalInterface.controllClasse.SessionControl;
+import br.com.stockplus.controllClasse.SessionControl;
 import br.com.stockplus.graphicalInterface.fornecedor.WinAtualizarFornecedor;
 import br.com.stockplus.graphicalInterface.login.WinLogin;
 import br.com.stockplus.graphicalInterface.produtos.WinAtualizarProduto;
