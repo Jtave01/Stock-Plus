@@ -342,24 +342,24 @@ public class WinPrincipal extends JFrame {
             e.printStackTrace();
         }
     }
-    
+
 
 	public WinPrincipal() {
-
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(1280, 720);
         setLocationRelativeTo(null);
-		getContentPane().setBackground(new Color(204, 204, 204));
-		getContentPane().setLayout(null);
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(Objects.requireNonNull(WinPrincipal.class.getResource("/imgs/dash_new.png"))));
-		lblNewLabel.setBounds(115, 50, 1151, 466);
-		getContentPane().add(lblNewLabel);
-		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1280, 720);
-		JMenuBar menuBar = new JMenuBar();
-		menuBar.setBackground(new Color(0, 102, 153));
-		setJMenuBar(menuBar);
-
+        getContentPane().setBackground(new Color(255, 255, 255));
+        getContentPane().setLayout(null);
+        setResizable(false);
+        JMenuBar menuBar = new JMenuBar();
+        menuBar.setBackground(new Color(0, 102, 153));
+        setJMenuBar(menuBar);
+        ImageIcon rawIcon = new ImageIcon(Objects.requireNonNull(WinPrincipal.class.getResource("/imgs/iconHome.png")));
+        Image scaledImg = rawIcon.getImage().getScaledInstance(950, 400, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon = new ImageIcon(scaledImg);
+        JLabel lblNewLabel = new JLabel(scaledIcon);
+        lblNewLabel.setBounds(170, 80, 950, 400);
+        getContentPane().add(lblNewLabel);
 
         /// --- home
         JMenu menuHome = new JMenu("HOME");
@@ -474,6 +474,6 @@ public class WinPrincipal extends JFrame {
             }
         });
 
-
+        setVisible(true);
     }
 }
