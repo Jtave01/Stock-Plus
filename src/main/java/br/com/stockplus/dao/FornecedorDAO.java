@@ -28,7 +28,27 @@ public class FornecedorDAO {
         }catch (Exception e){
             e.printStackTrace();       }
     }
+    public Integer findByTotalFornecedor(){
+        Integer total  = 0;
+        var sql = "SELECT COUNT(*) AS total  FROM fornecedor ";
+        try( var connection = ConnectionUtil.getConnection();
+             var statemente = connection.prepareStatement(sql);
+        ){
+            statemente.executeQuery();
+            var resultSet = statemente.getResultSet();
 
+            if(resultSet.next()){
+                total = resultSet.getInt("total");
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return total;
+
+    }
     public void delete(Long id){
         var sql = "DELETE FROM fornecedor WHERE id = ?";
 

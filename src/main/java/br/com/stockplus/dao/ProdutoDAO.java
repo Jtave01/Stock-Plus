@@ -14,7 +14,7 @@ import java.util.List;
 public class ProdutoDAO {
     public static ProdutoEntity entity = new ProdutoEntity();
 
-    /// Criar metodo a partir da query - >>>> SELECT produto.id, SUM(quantidade) * SUM(preco) FROM produto WHERE id = 6;
+
 
     public void insert(ProdutoEntity entity){
         var sql = "INSERT INTO produto (cod_ident, nome, descricao, quantidade, preco, localizacao, fornecedor_id,data_insercao) values(?,?,?,?,?,?,?,?) ";
@@ -137,6 +137,47 @@ public class ProdutoDAO {
             e.printStackTrace();
         }
         return  entities;
+    }
+    public Double findByTotalBalance(){
+        Double totalBalance = 0.0;
+        var sql = "SELECT SUM(total_preco) AS total FROM produto";
+
+        try( var connection = ConnectionUtil.getConnection();
+             var statemente = connection.prepareStatement(sql);
+        ) {
+           statemente.executeQuery();
+           var resultSet = statemente.getResultSet();
+
+           if(resultSet.next()){
+               totalBalance = resultSet.getDouble("total");
+           }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return  totalBalance;
+
+    }
+
+    public Integer findByTotalProdutos(){
+        Integer total = 0;
+        var sql = "SELECT COUNT(*) AS total FROM produto";
+        try( var connection = ConnectionUtil.getConnection();
+             var statemente = connection.prepareStatement(sql);
+        ){
+            statemente.executeQuery();
+            var resultSet = statemente.getResultSet();
+
+            if(resultSet.next()){
+                total = resultSet.getInt("total");
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return total;
     }
 
     public ProdutoEntity findById(Long id){

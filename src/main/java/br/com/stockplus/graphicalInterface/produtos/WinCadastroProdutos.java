@@ -88,7 +88,7 @@ public class WinCadastroProdutos extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(null);
 
-        // Panel de fundo - deve ser adicionado primeiro
+        // Panel
         panel = new JPanel();
         panel.setBackground(new Color(102, 153, 204));
         panel.setBounds(162, 25, 504, 335);

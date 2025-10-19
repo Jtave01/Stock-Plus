@@ -1,6 +1,8 @@
 package br.com.stockplus.graphicalInterface.home;
 
 import br.com.stockplus.controllClasse.SessionControl;
+import br.com.stockplus.dao.FornecedorDAO;
+import br.com.stockplus.dao.ProdutoDAO;
 import br.com.stockplus.graphicalInterface.fornecedor.WinAtualizarFornecedor;
 import br.com.stockplus.graphicalInterface.login.WinLogin;
 import br.com.stockplus.graphicalInterface.produtos.WinAtualizarProduto;
@@ -344,24 +346,131 @@ public class WinPrincipal extends JFrame {
     }
 
 
-	public WinPrincipal() {
+
+    JLabel lblPrecoTotal;
+    JLabel lblTotalProdutos;
+    JLabel lblTotalFornecedores;
+
+    JTextField textTotalPreco;
+    JTextField textTotalProdutos;
+    JTextField textTotalFornecedorees;
+
+    JPanel panelTituloResumo;
+
+    public void carregarPrecoTotalEstoque(){
+        ProdutoDAO DAO = new ProdutoDAO();
+
+        try {
+
+            Double totalBalance = DAO.findByTotalBalance();
+            textTotalPreco.setText("R$ " + String.valueOf(totalBalance));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+    public void carregarTotalFornecedores(){
+        FornecedorDAO DAO = new FornecedorDAO();
+
+        try{
+            Integer total = DAO.findByTotalFornecedor();
+
+            textTotalFornecedorees.setText(String.valueOf(total));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void carregatTotalDoEstoque(){
+        ProdutoDAO DAO = new ProdutoDAO();
+
+        try {
+            Integer total = DAO.findByTotalProdutos();
+            textTotalProdutos.setText(String.valueOf(total));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    public WinPrincipal() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1280, 720);
         setLocationRelativeTo(null);
         getContentPane().setBackground(new Color(255, 255, 255));
         getContentPane().setLayout(null);
         setResizable(false);
+
         JMenuBar menuBar = new JMenuBar();
         menuBar.setBackground(new Color(0, 102, 153));
         setJMenuBar(menuBar);
-        ImageIcon rawIcon = new ImageIcon(Objects.requireNonNull(WinPrincipal.class.getResource("/imgs/iconHome.png")));
-        Image scaledImg = rawIcon.getImage().getScaledInstance(950, 400, Image.SCALE_SMOOTH);
+        ImageIcon rawIcon = new ImageIcon(Objects.requireNonNull(WinPrincipal.class.getResource("/imgs/iconHome2.png")));
+        int larguraDesejada = 950;
+        double proporcao = (double) rawIcon.getIconHeight() / (double) rawIcon.getIconWidth();
+        int alturaProporcional = (int) (larguraDesejada * proporcao);
+        Image scaledImg = rawIcon.getImage().getScaledInstance(larguraDesejada, alturaProporcional, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon = new ImageIcon(scaledImg);
         JLabel lblNewLabel = new JLabel(scaledIcon);
-        lblNewLabel.setBounds(170, 80, 950, 400);
-        getContentPane().add(lblNewLabel);
+        int posX = (1280 - larguraDesejada) / 2;
+        int posY = 150;
+        lblNewLabel.setBounds(posX, posY, larguraDesejada, alturaProporcional);
 
-        /// --- home
+        getContentPane().add(lblNewLabel);
+        panelTituloResumo = new JPanel();
+        panelTituloResumo.setBounds(110, 120, 1060, 40);
+        panelTituloResumo.setBackground(new Color(0, 102, 153));
+        getContentPane().add(panelTituloResumo);
+        panelTituloResumo.setLayout(null);
+
+        //Configura a ordem dos componentes
+        getContentPane().setComponentZOrder(panelTituloResumo, 0);
+        getContentPane().setComponentZOrder(lblNewLabel, 1);
+
+        // Preço do estoque total
+        lblPrecoTotal = new JLabel("Preco total do estoque");
+        lblPrecoTotal.setBounds(560, 390, 200, 20);
+        getContentPane().add(lblPrecoTotal);
+
+        textTotalPreco = new JTextField();
+        textTotalPreco.setColumns(7);
+        textTotalPreco.setBounds(560, 415, 200, 30);
+        textTotalPreco.setEditable(false);
+        textTotalPreco.setEnabled(true);
+        textTotalPreco.setVisible(true);
+        textTotalPreco.setBackground(Color.WHITE);
+        carregarPrecoTotalEstoque();
+        getContentPane().add(textTotalPreco);
+
+        //qunatidade de produtos no estoque
+        lblTotalProdutos = new JLabel("Quanatidade total do estoque");
+        lblTotalProdutos.setBounds(200, 390, 200, 20);
+        getContentPane().add(lblTotalProdutos);
+
+        textTotalProdutos = new JTextField(7);
+        textTotalProdutos.setBounds(200, 415, 200, 30);
+        textTotalProdutos.setVisible(true);
+        textTotalProdutos.setEnabled(true);
+        textTotalProdutos.setEditable(false);
+        textTotalProdutos.setBackground(Color.WHITE);
+        carregatTotalDoEstoque();
+        getContentPane().add(textTotalProdutos);
+
+        //Qunatidade total de fornecedores
+        lblTotalFornecedores = new JLabel("Total de fornecedores");
+        lblTotalFornecedores.setBounds(900, 390, 200, 20);
+        getContentPane().add(lblTotalFornecedores);
+
+        textTotalFornecedorees = new JTextField(7);
+        textTotalFornecedorees.setBounds(900, 415, 200, 30);
+        textTotalFornecedorees.setEditable(false);
+        textTotalFornecedorees.setEnabled(true);
+        textTotalFornecedorees.setVisible(true);
+        textTotalFornecedorees.setBackground(Color.WHITE);
+        carregarTotalFornecedores();
+        getContentPane().add(textTotalFornecedorees);
+
+        // home
         JMenu menuHome = new JMenu("HOME");
         menuHome.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/imgs/ico_sair.png"))));
         menuHome.setForeground(Color.WHITE);
