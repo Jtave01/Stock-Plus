@@ -15,8 +15,11 @@ import br.com.stockplus.graphicalInterface.usuarios.WinPesquisaUsuario;
 import br.com.stockplus.graphicalInterface.usuarios.WinAtualizarUsuario;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.util.Objects;
+
+import static java.awt.Font.ITALIC;
 
 public class WinPrincipal extends JFrame {
 
@@ -356,6 +359,7 @@ public class WinPrincipal extends JFrame {
     JTextField textTotalFornecedorees;
 
     JPanel panelTituloResumo;
+    JLabel lblResumoDoNegocio;
 
     public void carregarPrecoTotalEstoque(){
         ProdutoDAO DAO = new ProdutoDAO();
@@ -415,17 +419,26 @@ public class WinPrincipal extends JFrame {
         int posX = (1280 - larguraDesejada) / 2;
         int posY = 150;
         lblNewLabel.setBounds(posX, posY, larguraDesejada, alturaProporcional);
-
         getContentPane().add(lblNewLabel);
+
         panelTituloResumo = new JPanel();
         panelTituloResumo.setBounds(110, 120, 1060, 40);
         panelTituloResumo.setBackground(new Color(0, 102, 153));
+        panelTituloResumo.setBorder(BorderFactory.createLineBorder(new Color(0, 51, 102), 2));
         getContentPane().add(panelTituloResumo);
         panelTituloResumo.setLayout(null);
 
+        lblResumoDoNegocio = new JLabel("Resumo do negicio");
+        lblResumoDoNegocio.setBounds(130, 120, 1060, 40);
+        lblResumoDoNegocio.setBackground(Color.BLACK);
+        lblResumoDoNegocio.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        getContentPane().add(lblResumoDoNegocio);
+
+
         //Configura a ordem dos componentes
-        getContentPane().setComponentZOrder(panelTituloResumo, 0);
-        getContentPane().setComponentZOrder(lblNewLabel, 1);
+        getContentPane().setComponentZOrder(lblResumoDoNegocio, 0);
+        getContentPane().setComponentZOrder(panelTituloResumo, 1);
+        getContentPane().setComponentZOrder(lblNewLabel, 2);
 
         // Preço do estoque total
         lblPrecoTotal = new JLabel("Preco total do estoque");

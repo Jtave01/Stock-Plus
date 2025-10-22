@@ -222,6 +222,7 @@ public class WinAtualizarUsuario extends JFrame {
                 return;
             }
 
+
             deletarUsuario();
         });
 
