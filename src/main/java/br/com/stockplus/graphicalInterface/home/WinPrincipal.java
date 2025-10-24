@@ -350,54 +350,7 @@ public class WinPrincipal extends JFrame {
 
 
 
-    JLabel lblPrecoTotal;
-    JLabel lblTotalProdutos;
-    JLabel lblTotalFornecedores;
 
-    JTextField textTotalPreco;
-    JTextField textTotalProdutos;
-    JTextField textTotalFornecedorees;
-
-    JPanel panelTituloResumo;
-    JLabel lblResumoDoNegocio;
-
-    public void carregarPrecoTotalEstoque(){
-        ProdutoDAO DAO = new ProdutoDAO();
-
-        try {
-
-            Double totalBalance = DAO.findByTotalBalance();
-            textTotalPreco.setText("R$ " + String.valueOf(totalBalance));
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-    public void carregarTotalFornecedores(){
-        FornecedorDAO DAO = new FornecedorDAO();
-
-        try{
-            Integer total = DAO.findByTotalFornecedor();
-
-            textTotalFornecedorees.setText(String.valueOf(total));
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    public void carregatTotalDoEstoque(){
-        ProdutoDAO DAO = new ProdutoDAO();
-
-        try {
-            Integer total = DAO.findByTotalProdutos();
-            textTotalProdutos.setText(String.valueOf(total));
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
     public WinPrincipal() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1280, 720);
@@ -409,79 +362,28 @@ public class WinPrincipal extends JFrame {
         JMenuBar menuBar = new JMenuBar();
         menuBar.setBackground(new Color(0, 102, 153));
         setJMenuBar(menuBar);
-        ImageIcon rawIcon = new ImageIcon(Objects.requireNonNull(WinPrincipal.class.getResource("/imgs/iconHome2.png")));
+
+
+        ImageIcon rawIcon = new ImageIcon(Objects.requireNonNull(WinPrincipal.class.getResource("/imgs/FundoFinal.png")));
         int larguraDesejada = 950;
         double proporcao = (double) rawIcon.getIconHeight() / (double) rawIcon.getIconWidth();
         int alturaProporcional = (int) (larguraDesejada * proporcao);
         Image scaledImg = rawIcon.getImage().getScaledInstance(larguraDesejada, alturaProporcional, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon = new ImageIcon(scaledImg);
         JLabel lblNewLabel = new JLabel(scaledIcon);
-        int posX = (1280 - larguraDesejada) / 2;
-        int posY = 150;
+        int larguraJanela = 1280;
+        int alturaJanela = 720;
+        int posX = (larguraJanela - larguraDesejada) / 2;
+        int posY = (alturaJanela - alturaProporcional) / 2;
         lblNewLabel.setBounds(posX, posY, larguraDesejada, alturaProporcional);
         getContentPane().add(lblNewLabel);
-
-        panelTituloResumo = new JPanel();
-        panelTituloResumo.setBounds(110, 120, 1060, 40);
-        panelTituloResumo.setBackground(new Color(0, 102, 153));
-        panelTituloResumo.setBorder(BorderFactory.createLineBorder(new Color(0, 51, 102), 2));
-        getContentPane().add(panelTituloResumo);
-        panelTituloResumo.setLayout(null);
-
-        lblResumoDoNegocio = new JLabel("Resumo do negicio");
-        lblResumoDoNegocio.setBounds(130, 120, 1060, 40);
-        lblResumoDoNegocio.setBackground(Color.BLACK);
-        lblResumoDoNegocio.setFont(new Font("Segoe UI", Font.BOLD, 16));
-        getContentPane().add(lblResumoDoNegocio);
+        SwingUtilities.invokeLater(() -> {
+            int novaPosX = (getContentPane().getWidth() - larguraDesejada) / 2;
+            int novaPosY = (getContentPane().getHeight() - alturaProporcional) / 2;
+            lblNewLabel.setBounds(novaPosX, novaPosY, larguraDesejada, alturaProporcional);
+        });
 
 
-        //Configura a ordem dos componentes
-        getContentPane().setComponentZOrder(lblResumoDoNegocio, 0);
-        getContentPane().setComponentZOrder(panelTituloResumo, 1);
-        getContentPane().setComponentZOrder(lblNewLabel, 2);
-
-        // Preço do estoque total
-        lblPrecoTotal = new JLabel("Preco total do estoque");
-        lblPrecoTotal.setBounds(560, 390, 200, 20);
-        getContentPane().add(lblPrecoTotal);
-
-        textTotalPreco = new JTextField();
-        textTotalPreco.setColumns(7);
-        textTotalPreco.setBounds(560, 415, 200, 30);
-        textTotalPreco.setEditable(false);
-        textTotalPreco.setEnabled(true);
-        textTotalPreco.setVisible(true);
-        textTotalPreco.setBackground(Color.WHITE);
-        carregarPrecoTotalEstoque();
-        getContentPane().add(textTotalPreco);
-
-        //qunatidade de produtos no estoque
-        lblTotalProdutos = new JLabel("Quanatidade total do estoque");
-        lblTotalProdutos.setBounds(200, 390, 200, 20);
-        getContentPane().add(lblTotalProdutos);
-
-        textTotalProdutos = new JTextField(7);
-        textTotalProdutos.setBounds(200, 415, 200, 30);
-        textTotalProdutos.setVisible(true);
-        textTotalProdutos.setEnabled(true);
-        textTotalProdutos.setEditable(false);
-        textTotalProdutos.setBackground(Color.WHITE);
-        carregatTotalDoEstoque();
-        getContentPane().add(textTotalProdutos);
-
-        //Qunatidade total de fornecedores
-        lblTotalFornecedores = new JLabel("Total de fornecedores");
-        lblTotalFornecedores.setBounds(900, 390, 200, 20);
-        getContentPane().add(lblTotalFornecedores);
-
-        textTotalFornecedorees = new JTextField(7);
-        textTotalFornecedorees.setBounds(900, 415, 200, 30);
-        textTotalFornecedorees.setEditable(false);
-        textTotalFornecedorees.setEnabled(true);
-        textTotalFornecedorees.setVisible(true);
-        textTotalFornecedorees.setBackground(Color.WHITE);
-        carregarTotalFornecedores();
-        getContentPane().add(textTotalFornecedorees);
 
         // home
         JMenu menuHome = new JMenu("HOME");
@@ -513,6 +415,24 @@ public class WinPrincipal extends JFrame {
         subMenuFCadastrar.addActionListener(e -> abrirCadastroFornecedor());
         subMenuFPesquisar.addActionListener(e -> abrirPesquisaFornecedor());
         subMenuFAtualizar.addActionListener(e -> abriAtualizarFornecedor());
+
+        /// ----> produtos
+        JMenu menuProdutos = new JMenu("PRODUTOS");
+        menuProdutos.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/imgs/ico_produtos.png"))));
+        menuProdutos.setForeground(Color.WHITE);
+        menuProdutos.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        menuBar.add(menuProdutos);
+        JMenuItem subMenuPCadastar = new JMenuItem("Cadastrar Produto");
+        JMenuItem subMenuPPesquisar = new JMenuItem("Pesquisar Produto");
+        JMenuItem subMenuPAtualizar = new JMenuItem("Atualizar Produto");
+        menuProdutos.add(subMenuPCadastar);
+        menuProdutos.addSeparator();
+        menuProdutos.add(subMenuPPesquisar);
+        menuProdutos.addSeparator();
+        menuProdutos.add(subMenuPAtualizar);
+        subMenuPCadastar.addActionListener(e -> abrirCadastroProduto());
+        subMenuPPesquisar.addActionListener(e -> abrirPesquisaProdutos());
+        subMenuPAtualizar.addActionListener( e -> abrirAtualizarProduto());
 
 
         /// ----> usuaarios
@@ -560,23 +480,6 @@ public class WinPrincipal extends JFrame {
             }
         });
 
-        /// ----> produtos
-        JMenu menuProdutos = new JMenu("PRODUTOS");
-        menuProdutos.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/imgs/ico_produtos.png"))));
-        menuProdutos.setForeground(Color.WHITE);
-        menuProdutos.setFont(new Font("Segoe UI", Font.BOLD, 16));
-        menuBar.add(menuProdutos);
-        JMenuItem subMenuPCadastar = new JMenuItem("Cadastrar Produto");
-        JMenuItem subMenuPPesquisar = new JMenuItem("Pesquisar Produto");
-        JMenuItem subMenuPAtualizar = new JMenuItem("Atualizar Produto");
-        menuProdutos.add(subMenuPCadastar);
-        menuProdutos.addSeparator();
-        menuProdutos.add(subMenuPPesquisar);
-        menuProdutos.addSeparator();
-        menuProdutos.add(subMenuPAtualizar);
-        subMenuPCadastar.addActionListener(e -> abrirCadastroProduto());
-        subMenuPPesquisar.addActionListener(e -> abrirPesquisaProdutos());
-        subMenuPAtualizar.addActionListener( e -> abrirAtualizarProduto());
 
 
         ///  ----> colocando menu sar ao canto direto

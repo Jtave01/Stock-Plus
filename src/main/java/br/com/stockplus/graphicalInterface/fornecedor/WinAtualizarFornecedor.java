@@ -57,6 +57,7 @@ public class WinAtualizarFornecedor extends JFrame {
             entity.setUf(uf);
             entity.setBairroEndereco(bairroEndereco);
             entity.setId(id);
+
             DAO.update(entity);
 
 

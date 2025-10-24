@@ -75,7 +75,7 @@ public class WinLogin extends JFrame {
 
         JLabel imgLabel = new JLabel();
         imgLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/imgs/logo_pri.png"))));
-        imgLabel.setBounds(47, -70, 407, 250);
+        imgLabel.setBounds(70, -70, 407, 250);
         panel.add(imgLabel);
 
 

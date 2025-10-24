@@ -12,8 +12,6 @@ import java.awt.*;
 
 public class WinAtualizarProduto extends JFrame {
 
-    private static final long serialVersionUID = 1L;
-
     public JPanel contentPane;
     public JPanel panel;
 
@@ -65,20 +63,21 @@ public class WinAtualizarProduto extends JFrame {
     }
 
     private void atualizarProduto(){
-        ProdutoDAO DAO = new ProdutoDAO();
 
-        ProdutoEntity produto  = new ProdutoEntity();
-
-        Long id = Long.valueOf(textId.getText());
-        String code = textCodigo.getText();
-        String nome  = textNome.getText();
-        String descricao = textDescricao.getText();
-        Integer quantidade = Integer.valueOf(textQuantidade.getText());
-        Double preco = Double.valueOf(textPreco.getText());
-        String localizacao = textLocalizacao.getText();
 
 
         try {
+            ProdutoDAO DAO = new ProdutoDAO();
+            ProdutoEntity produto  = new ProdutoEntity();
+
+            Long id = Long.valueOf(textId.getText());
+            String code = textCodigo.getText();
+            String nome  = textNome.getText();
+            String descricao = textDescricao.getText();
+            Integer quantidade = Integer.valueOf(textQuantidade.getText());
+            Double preco = Double.valueOf(textPreco.getText());
+            String localizacao = textLocalizacao.getText();
+
 
             FornecedorDAO DAOF = new FornecedorDAO();
             Long fornecedorId = DAOF.findByIdCnpj(textFornecedor.getText());
@@ -95,6 +94,7 @@ public class WinAtualizarProduto extends JFrame {
             produto.setLocalizacao(localizacao);
             produto.setFornecedor(fornecedor);
             produto.setId(id);
+
             DAO.update(produto);
 
             JOptionPane.showMessageDialog(this, "Fornecedor atualizado com sucesso");
@@ -237,7 +237,7 @@ public class WinAtualizarProduto extends JFrame {
         panel.add(textLocalizacao);
 
         // Fornecedor
-        JLabel lblFornecedor = new JLabel("Fornecedor:");
+        JLabel lblFornecedor = new JLabel("Fornecedor(CNPJ):");
         lblFornecedor.setBounds(60, 262, 85, 16);
         panel.add(lblFornecedor);
 
