@@ -45,23 +45,32 @@ public class WinCadastrodeFornecedor extends JFrame {
     public JButton btnCancelar;
 
     private void cadastroDeFornecedor(){
+        try {
+            FornecedorEntity entity = new FornecedorEntity();
 
-        FornecedorEntity entity = new FornecedorEntity();
+            entity.setCnpj(textCnpj.getText());
+            entity.setRazaoSocial(textRazaoSocial.getText());
+            entity.setEmail(textEmail.getText());
+            entity.setEndereco(textEndereco.getText());
+            entity.setNumeroEndereco(textNumero.getText());
+            entity.setTelefone(textTelefone.getText());
+            entity.setBairroEndereco(textBairro.getText());
+            entity.setCidade(textCidade.getText());
+            entity.setUf(textUf.getText());
 
-        entity.setCnpj(textCnpj.getText());
-        entity.setRazaoSocial(textRazaoSocial.getText());
-        entity.setEmail(textEmail.getText());
-        entity.setEndereco(textEndereco.getText());
-        entity.setNumeroEndereco(textNumero.getText());
-        entity.setTelefone(textTelefone.getText());
-        entity.setBairroEndereco(textBairro.getText());
-        entity.setCidade(textCidade.getText());
-        entity.setUf(textUf.getText());
+            FornecedorDAO DAO = new FornecedorDAO();
 
-        FornecedorDAO DAO = new FornecedorDAO();
+            DAO.insert(entity);
 
-        DAO.insert(entity);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Erro ao cadastrar fornecedor: ",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
 
+        
     }
     private void limparCampos() {
         textCnpj.setText("");
@@ -82,7 +91,7 @@ public class WinCadastrodeFornecedor extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(null);
 
-        // Panel de fundo - deve ser adicionado primeiro
+       //Panel 
         panel = new JPanel();
         panel.setBackground(new Color(102, 153, 204));
         panel.setBounds(175, 27, 504, 372);

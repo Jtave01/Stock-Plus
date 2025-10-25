@@ -57,7 +57,11 @@ public class WinAtualizarProduto extends JFrame {
             liberarCampos();
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "\"Produto não encontrado.\"");
+            JOptionPane.showMessageDialog(this,
+                    "Produto não encontrado: ",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
         }
 
     }
@@ -97,10 +101,15 @@ public class WinAtualizarProduto extends JFrame {
 
             DAO.update(produto);
 
-            JOptionPane.showMessageDialog(this, "Fornecedor atualizado com sucesso");
+            JOptionPane.showMessageDialog(this, "Produto atualizado com sucesso");
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro ao atulizar o produto");
+
+            JOptionPane.showMessageDialog(this,
+                    "Erro ao atualizar produto: ",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
         }
 
     }
@@ -116,7 +125,12 @@ public class WinAtualizarProduto extends JFrame {
 
             JOptionPane.showMessageDialog(this, "Produto deletado com suecesso");
         } catch (Exception e) {
-            throw new RuntimeException(e);
+
+            JOptionPane.showMessageDialog(this,
+                    "Erro ao deletar produto: ",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
         }
     }
 

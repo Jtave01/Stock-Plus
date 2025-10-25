@@ -65,6 +65,10 @@ public class WinAtualizarUsuario extends JFrame {
 
 
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Erro em atualizar usuario: ",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
 
@@ -72,15 +76,17 @@ public class WinAtualizarUsuario extends JFrame {
     }
 
     public void deletarUsuario(){
-        Long id = Long.valueOf(textId.getText());
 
         try {
-
+            Long id = Long.valueOf(textId.getText());
             UsuarioDAO DAO = new UsuarioDAO();
             DAO.delete(id);
             JOptionPane.showMessageDialog(this, "Usuario deletado com sucesso");
         } catch (Exception e) {
-
+            JOptionPane.showMessageDialog(this,
+                    "Erro em deletar usuario: ",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
 

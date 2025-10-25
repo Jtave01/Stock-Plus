@@ -51,7 +51,11 @@ public class WinPesquisaFornecedor extends JFrame {
 
         }catch (Exception e){
             limparCampos();
-            JOptionPane.showMessageDialog(this, "\"Fornecedor não encontrado.\"");
+            JOptionPane.showMessageDialog(this,
+                    "CNPJ incorreto ou  não cadastrado: ",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
 
         }
     }
@@ -91,7 +95,7 @@ public class WinPesquisaFornecedor extends JFrame {
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this,
-                    "Erro ao carregar fornecedores: " + e.getMessage(),
+                    "Erro ao carregar fornecedores: ",
                     "Erro",
                     JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();

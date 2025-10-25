@@ -45,28 +45,38 @@ public class WinCadastroProdutos extends JFrame {
     public JButton btnCancelar;
 
     public void cadastroProdutos(){
-        FornecedorDAO  DAOFornecedor = new FornecedorDAO();
-        Long fornecedorID = DAOFornecedor.findByIdCnpj(textCnpjFornecedor.getText());
-        ProdutoDAO DAOProduto = new ProdutoDAO();
 
-        var produto = new ProdutoEntity();
+        try {
 
-        produto.setCodIdent(textCodigoBarra.getText());
-        produto.setNome(textNome.getText());
-        produto.setDescricao(textDescricao.getText());
-        produto.setQuantidade(Integer.valueOf(textQuantidade.getText()));
-        produto.setPreco(Double.valueOf(textPreco.getText()));
-        produto.setLocalizacao(textLocalizacao.getText());
+            FornecedorDAO  DAOFornecedor = new FornecedorDAO();
+            Long fornecedorID = DAOFornecedor.findByIdCnpj(textCnpjFornecedor.getText());
+            ProdutoDAO DAOProduto = new ProdutoDAO();
 
-        FornecedorEntity fornecedor = new FornecedorEntity();
-        fornecedor.setId(fornecedorID);
-        produto.setFornecedor(fornecedor);
+            var produto = new ProdutoEntity();
+
+            produto.setCodIdent(textCodigoBarra.getText());
+            produto.setNome(textNome.getText());
+            produto.setDescricao(textDescricao.getText());
+            produto.setQuantidade(Integer.valueOf(textQuantidade.getText()));
+            produto.setPreco(Double.valueOf(textPreco.getText()));
+            produto.setLocalizacao(textLocalizacao.getText());
+
+            FornecedorEntity fornecedor = new FornecedorEntity();
+            fornecedor.setId(fornecedorID);
+            produto.setFornecedor(fornecedor);
 
 
-        DAOProduto.insert(produto);
+            DAOProduto.insert(produto);
 
-        limpar();
+            limpar();
 
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Erro ao cadastrar produto: ",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
     }
     public void limpar(){
         textCodigoBarra.setText("");

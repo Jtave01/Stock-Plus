@@ -350,6 +350,12 @@ public class WinPrincipal extends JFrame {
 
 
 
+    ImageIcon rawIcon;
+    JMenu menuFornecedores;
+    JMenu menuUsuarios;
+    JMenu menuLogin;
+    JMenu menuProdutos;
+    JMenu menuMovimentacao;
 
     public WinPrincipal() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -364,7 +370,7 @@ public class WinPrincipal extends JFrame {
         setJMenuBar(menuBar);
 
 
-        ImageIcon rawIcon = new ImageIcon(Objects.requireNonNull(WinPrincipal.class.getResource("/imgs/FundoFinal.png")));
+        rawIcon = new ImageIcon(Objects.requireNonNull(WinPrincipal.class.getResource("/imgs/FundoFinal.png")));
         int larguraDesejada = 950;
         double proporcao = (double) rawIcon.getIconHeight() / (double) rawIcon.getIconWidth();
         int alturaProporcional = (int) (larguraDesejada * proporcao);
@@ -385,7 +391,7 @@ public class WinPrincipal extends JFrame {
 
 
 
-        // home
+        //// ------>  home
         JMenu menuHome = new JMenu("HOME");
         menuHome.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/imgs/ico_sair.png"))));
         menuHome.setForeground(Color.WHITE);
@@ -399,7 +405,7 @@ public class WinPrincipal extends JFrame {
         });
 
         /// -----> fornecedores
-		JMenu menuFornecedores = new JMenu("FORNECEDORES");
+        menuFornecedores = new JMenu("FORNECEDORES");
 		menuFornecedores.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/imgs/ico_fornecedores.png"))));
 		menuFornecedores.setForeground(Color.WHITE);
 		menuFornecedores.setFont(new Font("Segoe UI", Font.BOLD, 16));
@@ -417,7 +423,7 @@ public class WinPrincipal extends JFrame {
         subMenuFAtualizar.addActionListener(e -> abriAtualizarFornecedor());
 
         /// ----> produtos
-        JMenu menuProdutos = new JMenu("PRODUTOS");
+        menuProdutos = new JMenu("PRODUTOS");
         menuProdutos.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/imgs/ico_produtos.png"))));
         menuProdutos.setForeground(Color.WHITE);
         menuProdutos.setFont(new Font("Segoe UI", Font.BOLD, 16));
@@ -434,9 +440,11 @@ public class WinPrincipal extends JFrame {
         subMenuPPesquisar.addActionListener(e -> abrirPesquisaProdutos());
         subMenuPAtualizar.addActionListener( e -> abrirAtualizarProduto());
 
+        menuMovimentacao = new JMenu("MOVIMENTAÇÃO");
+        menuProdutos.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/imgs/ico_produtos.png"))));
 
         /// ----> usuaarios
-		JMenu menuUsuarios = new JMenu("USUÁRIOS");
+        menuUsuarios = new JMenu("USUÁRIOS");
 		menuUsuarios.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/imgs/ico_usuarios.png"))));
 		menuUsuarios.setForeground(Color.WHITE);
 		menuUsuarios.setFont(new Font("Segoe UI", Font.BOLD, 16));
@@ -482,12 +490,14 @@ public class WinPrincipal extends JFrame {
 
 
 
+
+
         ///  ----> colocando menu sar ao canto direto
         menuBar.add(Box.createHorizontalGlue());
 
 
         ///  ---> sair
-        JMenu menuLogin = new JMenu("SAIR");
+        menuLogin = new JMenu("SAIR");
         menuLogin.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/imgs/ico_sair.png"))));
         menuLogin.setForeground(Color.WHITE);
         menuLogin.setFont(new Font("Segoe UI", Font.BOLD, 16));

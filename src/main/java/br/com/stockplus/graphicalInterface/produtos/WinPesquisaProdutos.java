@@ -64,7 +64,12 @@ public class WinPesquisaProdutos extends JFrame {
 
         }catch (Exception e){
             limpar();
-            JOptionPane.showMessageDialog(this, "\"Produto não encontrado.\"");
+
+            JOptionPane.showMessageDialog(this,
+                    "EProduto não encontrado: ",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
 
         }
     }

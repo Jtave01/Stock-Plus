@@ -32,21 +32,22 @@ public class WinAtualizarFornecedor extends JFrame {
 
 
     public void atualizarFornecedor() {
-        FornecedorEntity entity = new FornecedorEntity();
-        FornecedorDAO DAO = new FornecedorDAO();
-
-        Long id = Long.valueOf(textId.getText());
-        String cnpj = textCnpj.getText();
-        String razaoSocial = textRazaoSocial.getText();
-        String email = textEmail.getText();
-        String endereco = textEndereco.getText();
-        String numeroEndereco = textNumero.getText();
-        String telefone = textTelefone.getText();
-        String cidade = textCidade.getText();
-        String uf = textUf.getText();
-        String bairroEndereco = textBairro.getText();
 
         try {
+            FornecedorEntity entity = new FornecedorEntity();
+            FornecedorDAO DAO = new FornecedorDAO();
+
+            Long id = Long.valueOf(textId.getText());
+            String cnpj = textCnpj.getText();
+            String razaoSocial = textRazaoSocial.getText();
+            String email = textEmail.getText();
+            String endereco = textEndereco.getText();
+            String numeroEndereco = textNumero.getText();
+            String telefone = textTelefone.getText();
+            String cidade = textCidade.getText();
+            String uf = textUf.getText();
+            String bairroEndereco = textBairro.getText();
+
             entity.setCnpj(cnpj);
             entity.setRazaoSocial(razaoSocial);
             entity.setEmail(email);
@@ -64,15 +65,19 @@ public class WinAtualizarFornecedor extends JFrame {
             JOptionPane.showMessageDialog(null, "Fornecedor atualizado com sucesso");
 
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Erro ao atualizar fornecedor: ",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }
 
     public void buscarFornecedor(){
-        FornecedorDAO DAO = new FornecedorDAO();
-        FornecedorEntity fornecedor = new FornecedorEntity();
-
         try {
+
+            FornecedorDAO DAO = new FornecedorDAO();
+            FornecedorEntity fornecedor = new FornecedorEntity();
 
             Long idConvert = Long.parseLong(textId.getText());
 
@@ -93,24 +98,31 @@ public class WinAtualizarFornecedor extends JFrame {
             habilitar();
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "\"Fornecedor não encontrado.\"");
+            JOptionPane.showMessageDialog(this,
+                    "Erro ao buscaar fornecedor: ",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
         }
 
     }
 
     public void deetarFornecedor(){
-        Long id = Long.valueOf(textId.getText());
+
 
         try {
+            Long id = Long.valueOf(textId.getText());
             FornecedorDAO DAO = new FornecedorDAO();
-
-
             DAO.delete(id);
 
             limpar();
             JOptionPane.showMessageDialog(this, "Fornecedor deletado com sucesso");
 
         }catch (Exception e ){
+            JOptionPane.showMessageDialog(this,
+                    "Erro ao deletar fornecedor: ",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }

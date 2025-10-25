@@ -11,36 +11,54 @@ import java.util.Objects;
 
 public class WinLogin extends JFrame {
 
-    private static final long serialVersionUID = 1L;
+     JPanel contentPane;
+     JPanel panel;
 
-    public JPanel contentPane;
-    public JPanel panel;
+     JTextField textLogin;
+     JPasswordField textSenha;
 
-    public JTextField textLogin;
-    public JPasswordField textSenha;
+     JButton btnLogin;
 
-    public JButton btnLogin;
+     JLabel lblImg;
+
+     JLabel lblLogin;
+     JLabel lblSenha;
 
     private void realizarLogin() {
+        try {
 
-        String username =textLogin.getText();
-        String password = String.valueOf(textSenha.getPassword());
-        UsuarioDAO DAO = new UsuarioDAO();
+            String username =textLogin.getText();
+            String password = String.valueOf(textSenha.getPassword());
+            UsuarioDAO DAO = new UsuarioDAO();
 
+            var usuario =  DAO.findByLogin(username, password);
 
-        var usuario =  DAO.findByLogin(username, password);
+            if(usuario != null){
+                SessionControl.login(usuario);
+                irParaHome();
 
-        if(usuario != null){
-            SessionControl.login(usuario);
-            irParaHome();
+            }
+            else{
+                JOptionPane.showMessageDialog(null,  "Usuario ou senha invalida");
+                limpar();
+            }
 
-        }
-        else{
-            JOptionPane.showMessageDialog(null,  "Usuario ou senha invalida");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Erro no login: " + e.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
         }
 
 
     }
+
+    private void limpar() {
+        textLogin.setText("");
+        textSenha.setText("");
+    }
+
     private void irParaHome() {
         Timer timer = new Timer(50, e -> {
             setVisible(false);
@@ -73,26 +91,26 @@ public class WinLogin extends JFrame {
         contentPane.add(panel);
 
 
-        JLabel imgLabel = new JLabel();
-        imgLabel.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/imgs/logo_pri.png"))));
-        imgLabel.setBounds(70, -70, 407, 250);
-        panel.add(imgLabel);
+        lblImg = new JLabel();
+        lblImg.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/imgs/logo_pri.png"))));
+        lblImg.setBounds(70, -70, 407, 250);
+        panel.add(lblImg);
 
 
-        JLabel loginLabel = new JLabel("Login:");
-        loginLabel.setForeground(Color.WHITE);
-        loginLabel.setBounds(80, 150, 60, 20);
-        panel.add(loginLabel);
+        lblLogin = new JLabel("Login:");
+        lblLogin.setForeground(Color.WHITE);
+        lblLogin.setBounds(80, 150, 60, 20);
+        panel.add(lblLogin);
 
         textLogin = new JTextField();
         textLogin.setBounds(126, 155, 248, 25);
         panel.add(textLogin);
 
 
-        JLabel passwordLabel = new JLabel("Senha:");
-        passwordLabel.setForeground(Color.WHITE);
-        passwordLabel.setBounds(80, 220, 60, 20);
-        panel.add(passwordLabel);
+        lblSenha = new JLabel("Senha:");
+        lblSenha.setForeground(Color.WHITE);
+        lblSenha.setBounds(80, 220, 60, 20);
+        panel.add(lblSenha);
 
         textSenha = new JPasswordField();
         textSenha.setBounds(126, 220, 248, 25);
