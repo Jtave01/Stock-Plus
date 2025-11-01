@@ -167,7 +167,7 @@ public class WinHome extends JFrame {
     /*
      * Interação de trocas de telas, metodo padrão a ser replicado
      * Estrutura que garente essas mudanças: JMenuBar menuBar = new JMenuBar();
-     * que e nossa barra de menu da pagina inicial onde tem todos os outros menus e
+     * que é nossa barra de menu da pagina inicial onde tem todos os outros menus e
      * sub menus
      */
     private void abrirPesquisarUsuario() {
@@ -199,7 +199,7 @@ public class WinHome extends JFrame {
             this.setJMenuBar(menuBarHome);
             //Adicionamos o titulo
             this.setTitle("Pesquisa usuario");
-            //Recaucula o layout e organiza os componentes
+            //RecaLcula o layout e organiza os componentes
             this.revalidate();
             //Limpa e ajustas as cores
             this.repaint();
