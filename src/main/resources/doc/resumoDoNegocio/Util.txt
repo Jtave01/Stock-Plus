@@ -1,0 +1,629 @@
+
+ **
+    DESCONTINUADA
+ **
+
+ JLabel lblPrecoTotal;
+    JLabel lblTotalProdutos;
+    JLabel lblTotalFornecedores;
+
+    JTextField textTotalPreco;
+    JTextField textTotalProdutos;
+    JTextField textTotalFornecedorees;
+
+    JPanel panelTituloResumo;
+    JLabel lblResumoDoNegocio;
+
+    public void carregarPrecoTotalEstoque(){
+        ProdutoDAO DAO = new ProdutoDAO();
+
+        try {
+
+            Double totalBalance = DAO.findByTotalBalance();
+            textTotalPreco.setText("R$ " + String.valueOf(totalBalance));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+    public void carregarTotalFornecedores(){
+        FornecedorDAO DAO = new FornecedorDAO();
+
+        try{
+            Integer total = DAO.findByTotalFornecedor();
+
+            textTotalFornecedorees.setText(String.valueOf(total));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void carregatTotalDoEstoque(){
+        ProdutoDAO DAO = new ProdutoDAO();
+
+        try {
+            Integer total = DAO.findByTotalProdutos();
+            textTotalProdutos.setText(String.valueOf(total));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+
+            panelTituloResumo = new JPanel();
+            panelTituloResumo.setBounds(110, 120, 1060, 40);
+            panelTituloResumo.setBackground(new Color(0, 102, 153));
+            panelTituloResumo.setBorder(BorderFactory.createLineBorder(new Color(0, 51, 102), 2));
+            getContentPane().add(panelTituloResumo);
+            panelTituloResumo.setLayout(null);
+
+            lblResumoDoNegocio = new JLabel("Resumo do negicio");
+            lblResumoDoNegocio.setBounds(130, 120, 1060, 40);
+            lblResumoDoNegocio.setBackground(Color.BLACK);
+            lblResumoDoNegocio.setFont(new Font("Segoe UI", Font.BOLD, 16));
+            getContentPane().add(lblResumoDoNegocio);
+
+
+            //Configura a ordem dos componentes
+            getContentPane().setComponentZOrder(lblResumoDoNegocio, 0);
+            getContentPane().setComponentZOrder(panelTituloResumo, 1);
+            getContentPane().setComponentZOrder(lblNewLabel, 2);
+
+            // Preço do estoque total
+            lblPrecoTotal = new JLabel("Preco total do estoque");
+            lblPrecoTotal.setBounds(560, 390, 200, 20);
+            getContentPane().add(lblPrecoTotal);
+
+            textTotalPreco = new JTextField();
+            textTotalPreco.setColumns(7);
+            textTotalPreco.setBounds(560, 415, 200, 30);
+            textTotalPreco.setEditable(false);
+            textTotalPreco.setEnabled(true);
+            textTotalPreco.setVisible(true);
+            textTotalPreco.setBackground(Color.WHITE);
+            carregarPrecoTotalEstoque();
+            getContentPane().add(textTotalPreco);
+
+            //qunatidade de produtos no estoque
+            lblTotalProdutos = new JLabel("Quanatidade total do estoque");
+            lblTotalProdutos.setBounds(200, 390, 200, 20);
+            getContentPane().add(lblTotalProdutos);
+
+            textTotalProdutos = new JTextField(7);
+            textTotalProdutos.setBounds(200, 415, 200, 30);
+            textTotalProdutos.setVisible(true);
+            textTotalProdutos.setEnabled(true);
+            textTotalProdutos.setEditable(false);
+            textTotalProdutos.setBackground(Color.WHITE);
+            carregatTotalDoEstoque();
+            getContentPane().add(textTotalProdutos);
+
+            //Qunatidade total de fornecedores
+            lblTotalFornecedores = new JLabel("Total de fornecedores");
+            lblTotalFornecedores.setBounds(900, 390, 200, 20);
+            getContentPane().add(lblTotalFornecedores);
+
+            textTotalFornecedorees = new JTextField(7);
+            textTotalFornecedorees.setBounds(900, 415, 200, 30);
+            textTotalFornecedorees.setEditable(false);
+            textTotalFornecedorees.setEnabled(true);
+            textTotalFornecedorees.setVisible(true);
+            textTotalFornecedorees.setBackground(Color.WHITE);
+            carregarTotalFornecedores();
+            getContentPane().add(textTotalFornecedorees);
+
+
+
+
+
+        ImageIcon rawIcon = new ImageIcon(Objects.requireNonNull(WinPrincipal.class.getResource("/imgs/iconHome2.png")));
+        int larguraDesejada = 950;
+        double proporcao = (double) rawIcon.getIconHeight() / (double) rawIcon.getIconWidth();
+        int alturaProporcional = (int) (larguraDesejada * proporcao);
+        Image scaledImg = rawIcon.getImage().getScaledInstance(larguraDesejada, alturaProporcional, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon = new ImageIcon(scaledImg);
+        JLabel lblNewLabel = new JLabel(scaledIcon);
+        int posX = (1280 - larguraDesejada) / 2;
+        int posY = 150;
+        lblNewLabel.setBounds(posX, posY, larguraDesejada, alturaProporcional);
+        getContentPane().add(lblNewLabel);
+
+
+
+
+        /// descontinuada
+
+        package br.com.stockplus.graphicalInterface.produtos;
+
+        import br.com.stockplus.connection.ConnectionUtil;
+        import br.com.stockplus.dao.FornecedorDAO;
+        import br.com.stockplus.dao.ProdutoDAO;
+        import br.com.stockplus.entity.FornecedorEntity;
+        import br.com.stockplus.entity.ProdutoEntity;
+
+        import javax.swing.*;
+        import javax.swing.border.EmptyBorder;
+        import java.awt.*;
+
+        public class WinAtualizarProduto extends JFrame {
+
+            public JPanel contentPane;
+            public JPanel panel;
+
+            // Campos de texto
+            public JTextField textId;
+            public JTextField textCodigo;
+            public JTextField textNome;
+            public JTextField textDescricao;
+            public JTextField textQuantidade;
+            public JTextField textPreco;
+            public JTextField textLocalizacao;
+            public JTextField textFornecedor;
+
+            // Botões
+            public JButton btnBuscar;
+            public JButton btnAtualizar;
+            public JButton btnDeletar;
+
+            private void buscarProduto(){
+
+                ProdutoDAO DAO = new ProdutoDAO();
+                ProdutoEntity produto = new ProdutoEntity();
+
+                try {
+
+                    Long id = Long.valueOf(textId.getText());
+                    produto = DAO.findById(id);
+
+                    textCodigo.setText(produto.getCodIdent());
+                    textNome.setText(produto.getNome());
+                    textDescricao.setText(produto.getDescricao());
+                    textQuantidade.setText(String.valueOf(produto.getQuantidade()));
+                    textPreco.setText(String.valueOf(produto.getPreco()));
+                    textLocalizacao.setText(produto.getLocalizacao());
+
+                    FornecedorEntity fornecedor = new FornecedorEntity();
+                    fornecedor.setId(produto.getFornecedor().getId());
+                    FornecedorDAO DAOf = new FornecedorDAO();
+                    String fornecedorCnpj = DAOf.findByCnpjFromId(fornecedor.getId());
+
+                    textFornecedor.setText(fornecedorCnpj);
+
+                    liberarCampos();
+
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this,
+                            "Produto não encontrado: ",
+                            "Erro",
+                            JOptionPane.ERROR_MESSAGE);
+                    e.printStackTrace();
+                }
+
+            }
+
+            private void atualizarProduto(){
+
+
+
+                try {
+                    ProdutoDAO DAO = new ProdutoDAO();
+                    ProdutoEntity produto  = new ProdutoEntity();
+
+                    Long id = Long.valueOf(textId.getText());
+                    String code = textCodigo.getText();
+                    String nome  = textNome.getText();
+                    String descricao = textDescricao.getText();
+                    Integer quantidade = Integer.valueOf(textQuantidade.getText());
+                    Double preco = Double.valueOf(textPreco.getText());
+                    String localizacao = textLocalizacao.getText();
+
+
+                    FornecedorDAO DAOF = new FornecedorDAO();
+                    Long fornecedorId = DAOF.findByIdCnpj(textFornecedor.getText());
+
+                    FornecedorEntity fornecedor = new FornecedorEntity();
+
+                    fornecedor = DAOF.findById(fornecedorId);
+
+                    produto.setCodIdent(code);
+                    produto.setNome(nome);
+                    produto.setDescricao(descricao);
+                    produto.setQuantidade(quantidade);
+                    produto.setPreco(preco);
+                    produto.setLocalizacao(localizacao);
+                    produto.setFornecedor(fornecedor);
+                    produto.setId(id);
+
+                    DAO.update(produto);
+
+                    JOptionPane.showMessageDialog(this, "Produto atualizado com sucesso");
+
+                } catch (Exception e) {
+
+                    JOptionPane.showMessageDialog(this,
+                            "Erro ao atualizar produto: ",
+                            "Erro",
+                            JOptionPane.ERROR_MESSAGE);
+                    e.printStackTrace();
+                }
+
+            }
+
+            public void deletarProdutos(){
+                Long id = Long.valueOf(textId.getText());
+                try{
+                    ProdutoDAO DAO = new ProdutoDAO();
+
+
+                    DAO.delete(id);
+
+
+                    JOptionPane.showMessageDialog(this, "Produto deletado com suecesso");
+                } catch (Exception e) {
+
+                    JOptionPane.showMessageDialog(this,
+                            "Erro ao deletar produto: ",
+                            "Erro",
+                            JOptionPane.ERROR_MESSAGE);
+                    e.printStackTrace();
+                }
+            }
+
+            private void liberarCampos(){
+
+                textCodigo.setEnabled(true);
+                textNome.setEnabled(true);
+                textDescricao.setEnabled(true);
+                textQuantidade.setEnabled(true);
+                textPreco.setEnabled(true);
+                textLocalizacao.setEnabled(true);
+                textFornecedor.setEnabled(true);
+
+            }
+
+            public WinAtualizarProduto() {
+                setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                setBounds(100, 100, 884, 540);
+                contentPane = new JPanel();
+                contentPane.setBackground(new Color(0, 102, 153));
+                contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+                setContentPane(contentPane);
+                contentPane.setLayout(null);
+
+                panel = new JPanel();
+                panel.setBackground(new Color(102, 153, 204));
+                panel.setBounds(133, 24, 547, 420);
+                panel.setLayout(null);
+                contentPane.add(panel);
+
+                // Título
+                JLabel lblTitulo = new JLabel("ATUALIZAR PRODUTO");
+                lblTitulo.setForeground(new Color(255, 255, 255));
+                lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 27));
+                lblTitulo.setBounds(100, 10, 400, 44);
+                panel.add(lblTitulo);
+
+                // ID + Botão Buscar
+                JLabel lblId = new JLabel("ID:");
+                lblId.setBounds(112, 65, 30, 16);
+                panel.add(lblId);
+
+                textId = new JTextField();
+                textId.setBounds(145, 62, 80, 22);
+                panel.add(textId);
+
+                btnBuscar = new JButton("BUSCAR");
+                btnBuscar.setBackground(new Color(51, 153, 255));
+                btnBuscar.setForeground(Color.WHITE);
+                btnBuscar.setBounds(235, 61, 100, 25);
+                panel.add(btnBuscar);
+                btnBuscar.addActionListener(e -> buscarProduto());
+
+                // Código
+                JLabel lblCodigo = new JLabel("Código:");
+                lblCodigo.setBounds(85, 102, 60, 16);
+                panel.add(lblCodigo);
+
+                textCodigo = new JTextField();
+                textCodigo.setColumns(10);
+                textCodigo.setBounds(145, 99, 310, 22);
+                textCodigo.setEnabled(false);
+                panel.add(textCodigo);
+
+                // Nome
+                JLabel lblNome = new JLabel("Nome:");
+                lblNome.setBounds(95, 134, 50, 16);
+                panel.add(lblNome);
+
+                textNome = new JTextField();
+                textNome.setColumns(10);
+                textNome.setBounds(145, 131, 310, 22);
+                textNome.setEnabled(false);
+                panel.add(textNome);
+
+                // Descrição
+                JLabel lblDescricao = new JLabel("Descrição:");
+                lblDescricao.setBounds(73, 166, 70, 16);
+                panel.add(lblDescricao);
+
+                textDescricao = new JTextField();
+                textDescricao.setColumns(10);
+                textDescricao.setBounds(145, 163, 310, 22);
+                textDescricao.setEnabled(false);
+                panel.add(textDescricao);
+
+                // Quantidade
+                JLabel lblQuantidade = new JLabel("Quantidade:");
+                lblQuantidade.setBounds(60, 198, 85, 16);
+                panel.add(lblQuantidade);
+
+                textQuantidade = new JTextField();
+                textQuantidade.setColumns(10);
+                textQuantidade.setBounds(145, 195, 100, 22);
+                textQuantidade.setEnabled(false);
+                panel.add(textQuantidade);
+
+                // Preço
+                JLabel lblPreco = new JLabel("Preço unitário:");
+                lblPreco.setBounds(280, 198, 50, 16);
+                panel.add(lblPreco);
+
+                textPreco = new JTextField();
+                textPreco.setColumns(10);
+                textPreco.setBounds(325, 195, 130, 22);
+                textPreco.setEnabled(false);
+                panel.add(textPreco);
+
+                // Localização
+                JLabel lblLocalizacao = new JLabel("Localização:");
+                lblLocalizacao.setBounds(60, 230, 85, 16);
+                panel.add(lblLocalizacao);
+
+                textLocalizacao = new JTextField();
+                textLocalizacao.setColumns(10);
+                textLocalizacao.setBounds(145, 227, 193, 22);
+                textLocalizacao.setEnabled(false);
+                panel.add(textLocalizacao);
+
+                // Fornecedor
+                JLabel lblFornecedor = new JLabel("Fornecedor(CNPJ):");
+                lblFornecedor.setBounds(60, 262, 85, 16);
+                panel.add(lblFornecedor);
+
+                textFornecedor = new JTextField();
+                textFornecedor.setColumns(10);
+                textFornecedor.setBounds(145, 259, 310, 22);
+                textFornecedor.setEnabled(false);
+                panel.add(textFornecedor);
+
+                // Aviso
+                JLabel lblAviso = new JLabel("* Busque o produto pelo ID para atualizar ou deletar");
+                lblAviso.setForeground(Color.WHITE);
+                lblAviso.setFont(new Font("Tahoma", Font.ITALIC, 11));
+                lblAviso.setBounds(145, 320, 300, 16);
+                panel.add(lblAviso);
+
+                // Botões
+                btnDeletar = new JButton("DELETAR");
+                btnDeletar.setForeground(new Color(248, 248, 255));
+                btnDeletar.setBackground(new Color(220, 20, 60));
+                btnDeletar.setBounds(254, 455, 135, 32);
+                contentPane.add(btnDeletar);
+                btnDeletar.addActionListener(e -> deletarProdutos());
+
+                btnAtualizar = new JButton("ATUALIZAR");
+                btnAtualizar.setForeground(new Color(248, 248, 255));
+                btnAtualizar.setBackground(new Color(102, 204, 102));
+                btnAtualizar.setBounds(428, 455, 135, 32);
+                btnAtualizar.setEnabled(true);
+                contentPane.add(btnAtualizar);
+                btnAtualizar.addActionListener( e -> atualizarProduto() );
+            }
+        }
+
+
+        ////descontinuada
+
+        package br.com.stockplus.graphicalInterface.produtos;
+
+        import br.com.stockplus.dao.FornecedorDAO;
+        import br.com.stockplus.dao.ProdutoDAO;
+        import br.com.stockplus.entity.FornecedorEntity;
+        import br.com.stockplus.entity.ProdutoEntity;
+
+        import javax.swing.*;
+        import javax.swing.border.EmptyBorder;
+        import java.awt.*;
+
+        public class WinCadastroProdutos extends JFrame {
+
+            private static final long serialVersionUID = 1L;
+
+            // Painéis
+            public JPanel contentPane;
+            public JPanel panel;
+
+            // Labels
+            public JLabel lblTitulo;
+            public JLabel lblId;
+            public JLabel lblCodigoBarra;
+            public JLabel lblNome;
+            public JLabel lblDescricao;
+            public JLabel lblQuantidade;
+            public JLabel lblPreco;
+            public JLabel lblLocalizacao;
+            public JLabel lblCnpjFornecedor;
+
+            // Campos de texto
+            public JTextField textId;
+            public JTextField textCodigoBarra;
+            public JTextField textNome;
+            public JTextArea textDescricao;
+            public JTextField textQuantidade;
+            public JTextField textPreco;
+            public JTextField textLocalizacao;
+            public JTextField textCnpjFornecedor;
+
+            // Lista/ComboBox
+            public JComboBox<String> comboFornecedor;
+
+            // Botões
+            public JButton btnCadastrar;
+            public JButton btnCancelar;
+
+            public void cadastroProdutos(){
+                try {
+                    FornecedorDAO  DAOFornecedor = new FornecedorDAO();
+                    Long fornecedorID = DAOFornecedor.findByIdCnpj(textCnpjFornecedor.getText());
+                    ProdutoDAO DAOProduto = new ProdutoDAO();
+
+                    var produto = new ProdutoEntity();
+
+                    produto.setCodIdent(textCodigoBarra.getText());
+                    produto.setNome(textNome.getText());
+                    produto.setDescricao(textDescricao.getText());
+                    produto.setQuantidade(Integer.valueOf(textQuantidade.getText()));
+                    produto.setPreco(Double.valueOf(textPreco.getText()));
+                    produto.setLocalizacao(textLocalizacao.getText());
+
+                    FornecedorEntity fornecedor = new FornecedorEntity();
+                    fornecedor.setId(fornecedorID);
+                    produto.setFornecedor(fornecedor);
+
+                    DAOProduto.insert(produto);
+
+                    limpar();
+
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this,
+                            "Erro ao cadastrar produto: ",
+                            "Erro",
+                            JOptionPane.ERROR_MESSAGE);
+                    e.printStackTrace();
+                }
+            }
+
+            public void limpar(){
+                textCodigoBarra.setText("");
+                textNome.setText("");
+                textDescricao.setText("");
+                textQuantidade.setText("");
+                textPreco.setText("");
+                textLocalizacao.setText("");
+                textCnpjFornecedor.setText("");
+            }
+
+            public WinCadastroProdutos() {
+                setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                setBounds(100, 100, 1250, 550);
+                contentPane = new JPanel();
+                contentPane.setBackground(new Color(0, 102, 153));
+                contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+                setContentPane(contentPane);
+                contentPane.setLayout(null);
+
+                // Panel principal - EXATAMENTE como na pesquisa
+                panel = new JPanel();
+                panel.setBackground(new Color(102, 153, 204));
+                panel.setBounds(30, 24, 547, 450);
+                panel.setLayout(null);
+                contentPane.add(panel);
+
+                // Título
+                lblTitulo = new JLabel("CADASTRO DE PRODUTO");
+                lblTitulo.setForeground(new Color(255, 255, 255));
+                lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 27));
+                lblTitulo.setBounds(100, 10, 400, 44);
+                panel.add(lblTitulo);
+
+                // Código de Barra
+                lblCodigoBarra = new JLabel("Código de Barra:");
+                lblCodigoBarra.setBounds(30, 70, 115, 16);
+                panel.add(lblCodigoBarra);
+
+                textCodigoBarra = new JTextField();
+                textCodigoBarra.setColumns(10);
+                textCodigoBarra.setBounds(145, 67, 310, 22);
+                panel.add(textCodigoBarra);
+
+                // Nome
+                lblNome = new JLabel("Nome:");
+                lblNome.setBounds(95, 102, 50, 16);
+                panel.add(lblNome);
+
+                textNome = new JTextField();
+                textNome.setColumns(10);
+                textNome.setBounds(145, 99, 310, 22);
+                panel.add(textNome);
+
+                // Descrição
+                lblDescricao = new JLabel("Descrição:");
+                lblDescricao.setBounds(73, 134, 70, 16);
+                panel.add(lblDescricao);
+
+                textDescricao = new JTextArea();
+                textDescricao.setLineWrap(true);
+                textDescricao.setWrapStyleWord(true);
+                JScrollPane scrollDescricao = new JScrollPane(textDescricao);
+                scrollDescricao.setBounds(145, 131, 310, 50);
+                panel.add(scrollDescricao);
+
+                // Quantidade
+                lblQuantidade = new JLabel("Quantidade:");
+                lblQuantidade.setBounds(60, 196, 85, 16);
+                panel.add(lblQuantidade);
+
+                textQuantidade = new JTextField();
+                textQuantidade.setColumns(10);
+                textQuantidade.setBounds(145, 193, 100, 22);
+                panel.add(textQuantidade);
+
+                // Preço
+                lblPreco = new JLabel("Preço:");
+                lblPreco.setBounds(280, 196, 50, 16);
+                panel.add(lblPreco);
+
+                textPreco = new JTextField();
+                textPreco.setColumns(10);
+                textPreco.setBounds(325, 193, 130, 22);
+                panel.add(textPreco);
+
+                // Localização
+                lblLocalizacao = new JLabel("Localização:");
+                lblLocalizacao.setBounds(60, 228, 85, 16);
+                panel.add(lblLocalizacao);
+
+                textLocalizacao = new JTextField();
+                textLocalizacao.setColumns(10);
+                textLocalizacao.setBounds(145, 225, 193, 22);
+                panel.add(textLocalizacao);
+
+                // CNPJ Fornecedor
+                lblCnpjFornecedor = new JLabel("CNPJ Fornecedor:");
+                lblCnpjFornecedor.setBounds(40, 260, 105, 16);
+                panel.add(lblCnpjFornecedor);
+
+                textCnpjFornecedor = new JTextField();
+                textCnpjFornecedor.setColumns(10);
+                textCnpjFornecedor.setBounds(145, 257, 310, 22);
+                panel.add(textCnpjFornecedor);
+
+                // Botões
+                btnCancelar = new JButton("CANCELAR");
+                btnCancelar.setForeground(new Color(248, 248, 255));
+                btnCancelar.setBackground(new Color(220, 20, 60));
+                btnCancelar.setBounds(135, 480, 135, 32);
+                contentPane.add(btnCancelar);
+
+                btnCadastrar = new JButton("CADASTRAR +");
+                btnCadastrar.setForeground(new Color(248, 248, 255));
+                btnCadastrar.setBackground(new Color(102, 204, 102));
+                btnCadastrar.setBounds(290, 480, 135, 32);
+                contentPane.add(btnCadastrar);
+                btnCadastrar.addActionListener(e -> cadastroProdutos());
+            }
+        }

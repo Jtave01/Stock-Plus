@@ -39,6 +39,22 @@ public class ProdutoDAO {
 
     }
 
+    public void updateEntrda(ProdutoEntity entity ){
+
+        var sql = "UPDATE produto SET quantidade = ? WHERE id = ? ";
+        try(var connection = ConnectionUtil.getConnection();
+            var statemente = connection.prepareStatement(sql);
+        ) {
+
+            statemente.setInt(1, (entity.getQuantidade()));
+            statemente.setLong(2, entity.getId());
+            statemente.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void update(ProdutoEntity entity){
         var sql = "UPDATE produto SET cod_ident = ?, nome = ?, descricao = ?, quantidade = ?, preco = ?, localizacao = ?, fornecedor_id =? WHERE id = ?";
         try(var connetion = ConnectionUtil.getConnection();
@@ -72,6 +88,28 @@ public class ProdutoDAO {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public Long findByCodeForId(String code){
+        Long id = 0L;
+        var sql = "SELECT id FROM produto WHERE cod_ident = ? ";
+        try(var connection = ConnectionUtil.getConnection();
+            var statemente = connection.prepareStatement(sql);
+        ) {
+            statemente.setString(1, code);
+            statemente.executeQuery();
+            var reusltSet = statemente.getResultSet();
+
+            if(reusltSet.next()){
+                id = reusltSet.getLong("id");
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return id;
     }
 
     public ProdutoEntity findByCode(String code){

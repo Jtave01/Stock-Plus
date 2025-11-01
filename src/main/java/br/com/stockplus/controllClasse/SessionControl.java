@@ -7,7 +7,7 @@ import br.com.stockplus.graphicalInterface.login.WinLogin;
 import java.awt.*;
 
 public class SessionControl {
-    ///  --> Run
+    // Run
     public static void runApp(){
         EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -21,7 +21,7 @@ public class SessionControl {
         });
     }
 
-    /// --> Controle de acesso  de usuario logado
+    // Controle de acesso  de usuario logado
     private static UsuarioEntity usuarioLogado;
 
     public static void login(UsuarioEntity user){
@@ -37,7 +37,7 @@ public class SessionControl {
         return usuarioLogado != null && usuarioLogado.getRole().getId() == 1;
     }
 
-    /// ---> Teste conect
+    // Teste conect
     public static void testeConnection(){
         try(var connection = ConnectionUtil.getConnection()) {
             System.out.println("Conection status ---> \n" +

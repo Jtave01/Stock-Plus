@@ -14,7 +14,6 @@ import java.util.List;
 
 public class WinPesquisaProdutos extends JFrame {
 
-    private static final long serialVersionUID = 1L;
 
     public JPanel contentPane;
     public JPanel panel;
@@ -85,12 +84,11 @@ public class WinPesquisaProdutos extends JFrame {
          textFornecedor.setText("");
          textDataInsercao.setText("");
     }
-
     public WinPesquisaProdutos() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 1250, 550);
         contentPane = new JPanel();
-        contentPane.setBackground(new Color(0, 102, 153));
+        contentPane.setBackground(new Color(255, 255, 255));
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(null);
@@ -249,11 +247,11 @@ public class WinPesquisaProdutos extends JFrame {
 
         btnLimpar = new JButton("LIMPAR");
         btnLimpar.setForeground(new Color(248, 248, 255));
-        btnLimpar.setBackground(new Color(255, 140, 0));
+        btnLimpar.setBackground(new Color(25, 79, 110));
         btnLimpar.setBounds(225, 480, 135, 32);
         contentPane.add(btnLimpar);
 
-        // PAINEL DIREITO - Tabela com todos os produtos
+        // Tabela com todos os produtos
         JPanel panelTabela = new JPanel();
         panelTabela.setBackground(new Color(102, 153, 204));
         panelTabela.setBounds(600, 24, 600, 450);

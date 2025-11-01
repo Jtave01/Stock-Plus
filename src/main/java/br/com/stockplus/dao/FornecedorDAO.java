@@ -222,7 +222,11 @@ public class FornecedorDAO {
         }catch (Exception e) {
             e.printStackTrace();
         }
+        if(entity != null){
+            return entity;
+        }else{
+            return null;
+        }
 
-        return entity;
     }
 }

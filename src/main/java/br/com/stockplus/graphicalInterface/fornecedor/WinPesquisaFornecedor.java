@@ -106,14 +106,14 @@ public class WinPesquisaFornecedor extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 1250, 550);
         contentPane = new JPanel();
-        contentPane.setBackground(new Color(0, 102, 153));
+        contentPane.setBackground(new Color(255, 255, 255));
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(null);
 
         panel = new JPanel();
         panel.setBackground(new Color(102, 153, 204));
-        panel.setBounds(30, 24, 547, 450);  // Mudei X de 133 para 30 e altura para 450
+        panel.setBounds(30, 24, 547, 450);
         panel.setLayout(null);
         contentPane.add(panel);
 
@@ -226,15 +226,15 @@ public class WinPesquisaFornecedor extends JFrame {
 
         btnLimpar = new JButton("LIMPAR");
         btnLimpar.setForeground(new Color(248, 248, 255));
-        btnLimpar.setBackground(new Color(255, 140, 0));
-        btnLimpar.setBounds(225, 480, 135, 32);  // Ajustar Y de 395 para 480
+        btnLimpar.setBackground(new Color(25, 79, 110));
+        btnLimpar.setBounds(225, 480, 135, 32);
         contentPane.add(btnLimpar);
         btnLimpar.addActionListener(e -> limparCampos());
 
         // PAINEL DIREITO - Tabela com todos os fornecedores
         JPanel panelTabela = new JPanel();
         panelTabela.setBackground(new Color(102, 153, 204));
-        panelTabela.setBounds(600, 24, 600, 450);  // Ajustar X de 600 e largura para 600
+        panelTabela.setBounds(600, 24, 600, 450);
         panelTabela.setLayout(null);
         contentPane.add(panelTabela);
 

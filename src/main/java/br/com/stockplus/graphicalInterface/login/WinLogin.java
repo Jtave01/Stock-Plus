@@ -1,7 +1,7 @@
 package br.com.stockplus.graphicalInterface.login;
 
 import br.com.stockplus.dao.UsuarioDAO;
-import br.com.stockplus.graphicalInterface.home.WinPrincipal;
+import br.com.stockplus.graphicalInterface.home.WinHome;
 import br.com.stockplus.controllClasse.SessionControl;
 
 import javax.swing.*;
@@ -62,7 +62,7 @@ public class WinLogin extends JFrame {
     private void irParaHome() {
         Timer timer = new Timer(50, e -> {
             setVisible(false);
-            WinPrincipal principal = new WinPrincipal();
+            WinHome principal = new WinHome();
             principal.setLocationRelativeTo(null);
             principal.setVisible(true);
             dispose();
@@ -79,49 +79,64 @@ public class WinLogin extends JFrame {
         setTitle("Login - Sistema de Almoxarifado");
 
         contentPane = new JPanel();
-        contentPane.setBackground(new Color(0, 102, 153));
+        contentPane.setBackground(new Color(25, 79, 110));
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(null);
 
         panel = new JPanel();
         panel.setBackground(new Color(102, 153, 204));
-        panel.setBounds(390, 150, 500, 420);
+        panel.setBounds(340, 100, 600, 520);
         panel.setLayout(null);
         contentPane.add(panel);
 
 
+        int larguraDoPainel = 600;
+        int novaLarguraDaLogo = 540;
         lblImg = new JLabel();
-        lblImg.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/imgs/logo_pri.png"))));
-        lblImg.setBounds(70, -70, 407, 250);
+        ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/imgs/FundoFinal.png")));
+        Image img = icon.getImage().getScaledInstance(novaLarguraDaLogo, -1, Image.SCALE_SMOOTH);
+        ImageIcon newIcon = new ImageIcon(img);
+        int novaAlturaDaLogo = newIcon.getIconHeight();
+        int xLogoCentralizado = (larguraDoPainel - novaLarguraDaLogo) / 2;
+        lblImg.setIcon(newIcon);
+        lblImg.setBounds(xLogoCentralizado, -50, novaLarguraDaLogo, novaAlturaDaLogo);
         panel.add(lblImg);
-
 
         lblLogin = new JLabel("Login:");
         lblLogin.setForeground(Color.WHITE);
-        lblLogin.setBounds(80, 150, 60, 20);
+        lblLogin.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        lblLogin.setBounds(100, 220, 60, 20);
+        panel.add(lblLogin);
+        lblLogin = new JLabel("Login:");
+        lblLogin.setForeground(Color.WHITE);
+        lblLogin.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        lblLogin.setBounds(100, 220, 60, 20);
         panel.add(lblLogin);
 
         textLogin = new JTextField();
-        textLogin.setBounds(126, 155, 248, 25);
+        textLogin.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        textLogin.setBounds(165, 218, 300, 30);
         panel.add(textLogin);
+
 
 
         lblSenha = new JLabel("Senha:");
         lblSenha.setForeground(Color.WHITE);
-        lblSenha.setBounds(80, 220, 60, 20);
+        lblSenha.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        lblSenha.setBounds(100, 280, 60, 20);
         panel.add(lblSenha);
 
         textSenha = new JPasswordField();
-        textSenha.setBounds(126, 220, 248, 25);
+        textSenha.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        textSenha.setBounds(165, 278, 300, 30);
         panel.add(textSenha);
 
-
         btnLogin = new JButton("LOGIN");
-        btnLogin.setBackground(new Color(102, 204, 102));
+        btnLogin.setBackground(new Color(25, 79, 110));
         btnLogin.setForeground(Color.WHITE);
-        btnLogin.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        btnLogin.setBounds(175, 270, 150, 35);
+        btnLogin.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        btnLogin.setBounds(225, 340, 150, 40);
         btnLogin.addActionListener(e ->
                 realizarLogin()
         );

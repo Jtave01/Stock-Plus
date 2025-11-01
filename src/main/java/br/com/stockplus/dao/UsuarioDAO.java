@@ -6,6 +6,9 @@ import br.com.stockplus.entity.UsuarioEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.swing.*;
+import java.security.PublicKey;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UsuarioDAO {
     public void insert(UsuarioEntity usuarioEntity){
@@ -99,6 +102,41 @@ public class UsuarioDAO {
         }
 
         return entity;
+    }
+
+    public List<UsuarioEntity> findAll(){
+        List<UsuarioEntity>  entities = new ArrayList<>();
+        var sql = "SELECT * FROM usuarios";
+
+        try(var connection = ConnectionUtil.getConnection();
+            var statemante = connection.prepareStatement(sql);
+            ) {
+            statemante.executeQuery();
+            var resultset = statemante.getResultSet();
+
+            while (resultset.next()){
+                UsuarioEntity entity = new UsuarioEntity();
+
+                entity.setUsaername(resultset.getString("username"));
+                entity.setNome(resultset.getString("nome"));
+                entity.setEmail(resultset.getString("email"));
+
+                var role = new RoleEntitty();
+
+                role.setId(resultset.getLong("role_id"));
+
+                entity.setRole(role);
+
+                entities.add(entity);
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return entities;
+
     }
 
     public UsuarioEntity findByUserName(String username){
