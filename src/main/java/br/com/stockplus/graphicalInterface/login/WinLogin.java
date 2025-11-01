@@ -2,7 +2,7 @@ package br.com.stockplus.graphicalInterface.login;
 
 import br.com.stockplus.dao.UsuarioDAO;
 import br.com.stockplus.graphicalInterface.home.WinHome;
-import br.com.stockplus.controllClasse.SessionControl;
+import br.com.stockplus.controlClasse.SessionControl;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

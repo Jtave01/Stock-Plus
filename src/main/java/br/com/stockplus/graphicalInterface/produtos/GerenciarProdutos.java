@@ -199,7 +199,6 @@ public class GerenciarProdutos extends JFrame {
         textPrecoAut.setText("");
         textLocalizacaoAut.setText("");
         textFornecedorAut.setText("");
-
         textCodigoAut.setEnabled(false);
         textNomeAut.setEnabled(false);
         textDescricaoAut.setEnabled(false);
@@ -219,7 +218,7 @@ public class GerenciarProdutos extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(null);
 
-        // ===== PAINEL DE CADASTRO =====
+        // PAINEL DE CADASTRO
         panelCadastro = new JPanel();
         panelCadastro.setBackground(new Color(102, 153, 204));
         panelCadastro.setBounds(30, 24, 547, 450);

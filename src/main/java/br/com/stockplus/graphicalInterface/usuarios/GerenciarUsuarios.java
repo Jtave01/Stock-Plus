@@ -3,7 +3,7 @@ package br.com.stockplus.graphicalInterface.usuarios;
 import br.com.stockplus.dao.UsuarioDAO;
 import br.com.stockplus.entity.RoleEntitty;
 import br.com.stockplus.entity.UsuarioEntity;
-import br.com.stockplus.controllClasse.SessionControl;
+import br.com.stockplus.controlClasse.SessionControl;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
