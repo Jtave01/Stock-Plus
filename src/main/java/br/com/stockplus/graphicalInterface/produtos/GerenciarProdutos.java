@@ -73,7 +73,7 @@ public class GerenciarProdutos extends JFrame {
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this,
-                    "Erro ao cadastrar produto: " + e.getMessage(),
+                    "Erro ao cadastrar produto: ",
                     "Erro",
                     JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
@@ -116,8 +116,7 @@ public class GerenciarProdutos extends JFrame {
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this,
-                    "Erro ao buscar produto: " + e.getMessage(),
-                    "Erro",
+                    "Erro ao buscar produto: ", "Erro",
                     JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
@@ -149,7 +148,7 @@ public class GerenciarProdutos extends JFrame {
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this,
-                    "Erro ao atualizar produto: " + e.getMessage(),
+                    "Erro ao atualizar produto: " ,
                     "Erro",
                     JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
@@ -174,7 +173,7 @@ public class GerenciarProdutos extends JFrame {
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this,
-                    "Erro ao deletar produto: " + e.getMessage(),
+                    "Erro ao deletar produto: " ,
                     "Erro",
                     JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
